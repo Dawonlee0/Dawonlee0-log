@@ -1,13 +1,13 @@
 const CONFIG = {
   // profile setting (required)
   profile: {
-    name: "morethanmin",
-    image: "/avatar.svg", // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
-    role: "frontend developer",
-    bio: "I develop everything using node.",
-    email: "morethanmin.dev@gmail.com",
-    linkedin: "morethanmin",
-    github: "morethanmin",
+    name: "Dawonlee",
+    image: <img src="https://notion-avatar.vercel.app/api/img/eyJmYWNlIjoyLCJub3NlIjo5LCJtb3V0aCI6MTAsImV5ZXMiOjAsImV5ZWJyb3dzIjoxMSwiZ2xhc3NlcyI6MSwiaGFpciI6NiwiYWNjZXNzb3JpZXMiOjAsImRldGFpbHMiOjYsImJlYXJkIjowLCJmbGlwIjowLCJjb2xvciI6InJnYmEoMjU1LCAwLCAwLCAwKSIsInNoYXBlIjoibm9uZSJ9" alt="notion avatar">, // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
+    role: "backend developer",
+    bio: "I am dawon",
+    email: "ttoyr219@naver.com",
+    linkedin: "",
+    github: "Dawonlee0",
     instagram: "",
   },
   projects: [
@@ -18,8 +18,8 @@ const CONFIG = {
   ],
   // blog setting (required)
   blog: {
-    title: "morethan-log",
-    description: "welcome to morethan-log!",
+    title: "Dawonlee0-log",
+    description: "welcome to Dawonlee0-log!",
     scheme: "dark", // 'light' | 'dark' | 'system'
   },
 
@@ -54,7 +54,7 @@ const CONFIG = {
     },
   },
   utterances: {
-    enable: true,
+    enable: false,
     config: {
       repo: process.env.NEXT_PUBLIC_UTTERANCES_REPO || "",
       "issue-term": "og:title",
