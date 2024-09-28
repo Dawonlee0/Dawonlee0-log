@@ -4,7 +4,7 @@ const CONFIG = {
     name: "Dawonlee",
     image: "https://notion-avatar.vercel.app/api/img/eyJmYWNlIjoyLCJub3NlIjo5LCJtb3V0aCI6MTAsImV5ZXMiOjAsImV5ZWJyb3dzIjoxMSwiZ2xhc3NlcyI6MSwiaGFpciI6NiwiYWNjZXNzb3JpZXMiOjAsImRldGFpbHMiOjYsImJlYXJkIjowLCJmbGlwIjowLCJjb2xvciI6InJnYmEoMjU1LCAwLCAwLCAwKSIsInNoYXBlIjoibm9uZSJ9", 
     // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
-    role: "backend developer",
+    role: "developer",
     bio: "I am dawon",
     email: "ttoyr219@naver.com",
     linkedin: "",
