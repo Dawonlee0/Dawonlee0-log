@@ -27,8 +27,8 @@ const PostCard: React.FC<Props> = ({ data }) => {
           <div className="thumbnail">
             <Image
               src={data.thumbnail}
-              width={100}
-              height={100}
+              width={160} // 16:9 비율을 위해 너비 조정
+              height={90} // 16:9 비율을 위해 높이 조정
               alt={data.title}
               objectFit="cover"
             />
@@ -57,8 +57,8 @@ const StyledWrapper = styled(Link)`
     }
 
     .thumbnail {
-      width: 100px;
-      height: 100px;
+      width: 160px; // 16:9 비율을 위해 너비 조정
+      height: 90px; // 16:9 비율을 위해 높이 조정
       border-radius: 1rem;
       overflow: hidden;
     }
@@ -71,6 +71,12 @@ const StyledWrapper = styled(Link)`
 
     .date {
       color: ${({ theme }) => theme.colors.gray10};
+    }
+
+    .tags {
+      display: flex; // 가로로 나열
+      flex-wrap: wrap; // 여러 줄로 나열 가능
+      gap: 0.5rem; // 태그 간격
     }
   }
 `
