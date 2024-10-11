@@ -55,11 +55,11 @@ const CONFIG = {
     },
   },
   utterances: {
-    enable: false,
+    enable: true,
     config: {
-      repo: process.env.NEXT_PUBLIC_UTTERANCES_REPO || "",
-      "issue-term": "og:title",
-      label: "💬 Utterances",
+      repo: "Dawonlee0/Dawonlee0-log", // GitHub 리포지토리 이름
+      "issue-term": "og:title", // 댓글을 매핑할 기준 (예: 'og:title', 'pathname' 등)
+      label: "💬 Utterances", // 이슈에 추가할 라벨 (선택사항)
     },
   },
   cusdis: {
