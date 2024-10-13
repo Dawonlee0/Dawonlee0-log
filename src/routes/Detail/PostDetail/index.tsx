@@ -57,6 +57,6 @@ const StyledWrapper = styled.div`
   margin: 0 auto;
   > article {
     margin: 0 auto;
-    max-width: 42rem;
+    max-width: 72rem; // 글 넓이 늘리기
   }
 `
