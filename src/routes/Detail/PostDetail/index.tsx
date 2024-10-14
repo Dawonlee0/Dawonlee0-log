@@ -49,7 +49,7 @@ const StyledWrapper = styled.div`
   padding-top: 3rem;
   padding-bottom: 3rem;
   border-radius: 1.5rem;
-  max-width: 66rem; // 원래 56
+  max-width: 60rem; // [원래 56]
   background-color: ${({ theme }) =>
     theme.scheme === "light" ? "white" : theme.colors.gray4};
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
@@ -57,6 +57,6 @@ const StyledWrapper = styled.div`
   margin: 0 auto;
   > article {
     margin: 0 auto;
-    max-width: 52rem; // 글 자체 넓이 늘리기 원래 42
+    max-width: 46rem; // 글 자체 넓이 늘리기 [원래 42]
   }
 `
