@@ -21,7 +21,7 @@ const CONFIG = {
   blog: {
     title: "Dawonlee0-log",
     description: "welcome to Dawonlee0-log!",
-    scheme: "light", // 'light' | 'dark' | 'system'
+    scheme: "system", // 'light' | 'dark' | 'system'
   },
 
   // CONFIG configration (required)
