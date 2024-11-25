@@ -21,7 +21,7 @@ const CONFIG = {
   blog: {
     title: "Dawonlee0-log",
     description: "welcome to Dawonlee0-log!",
-    scheme: "dark", // 'light' | 'dark' | 'system'
+    scheme: "system", // 'light' | 'dark' | 'system'
   },
 
   // CONFIG configration (required)
@@ -37,9 +37,9 @@ const CONFIG = {
 
   // plugin configuration (optional)
   googleAnalytics: {
-    enable: false,
+    enable: true, // Google Analytics 사용을 원할 경우 true로 변경
     config: {
-      measurementId: process.env.NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID || "",
+      measurementId: "G-QM3NQX19QR", // 발급받은 Google Analytics Measurement ID를 입력
     },
   },
   googleSearchConsole: {
