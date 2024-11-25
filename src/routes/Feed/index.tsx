@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+import Image from "next/image"
 import SearchInput from "./SearchInput"
 import { FeedHeader } from "./FeedHeader"
 import Footer from "./Footer"
@@ -21,6 +21,15 @@ const Feed: React.FC<Props> = () => {
 
   return (
     <StyledWrapper>
+      <div className="ocean-banner">
+        <Image
+          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fm=jpg&q=60&w=3000"
+          alt="Ocean Banner"
+          layout="fill"
+          objectFit="cover"
+          priority
+        />
+      </div>
       <div
         className="lt"
         css={{
@@ -62,8 +71,18 @@ const Feed: React.FC<Props> = () => {
 export default Feed
 
 const StyledWrapper = styled.div`
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+  .ocean-banner {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    margin-bottom: 2rem;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
 
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   padding: 2rem 0;
   display: grid;
   gap: 1.5rem;
@@ -71,6 +90,12 @@ const StyledWrapper = styled.div`
   @media (max-width: 768px) {
     display: block;
     padding: 0.5rem 0;
+    
+    .ocean-banner {
+      height: 200px;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+    }
   }
 
   > .lt {
