@@ -76,17 +76,17 @@ const StyledWrapper = styled.div`
   .ocean-banner {
     position: relative;
     width: 100%;
-    height: 400px;
+    height: 200px;
     margin-bottom: 2rem;
     overflow: hidden;
     
     @media (max-width: 768px) {
-      height: 200px;
+      height: 100px;
     }
   }
 
   .content-wrapper {
-    max-width: 500px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
     display: grid;
