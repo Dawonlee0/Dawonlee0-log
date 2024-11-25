@@ -86,7 +86,7 @@ const StyledWrapper = styled.div`
   }
 
   .content-wrapper {
-    max-width: 800px;
+    max-width: 500px;
     margin: 0 auto;
     padding: 0 1rem;
     display: grid;
