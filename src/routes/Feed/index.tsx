@@ -11,7 +11,6 @@ import ServiceCard from "./ServiceCard"
 import ContactCard from "./ContactCard"
 import PostList from "./PostList"
 import PinnedPosts from "./PostList/PinnedPosts"
-import { css } from "@emotion/react"
 
 const HEADER_HEIGHT = 73
 
@@ -21,7 +20,7 @@ const Feed: React.FC<Props> = () => {
   const [q, setQ] = useState("")
 
   return (
-    <>
+    <StyledWrapper>
       <div className="ocean-banner">
         <Image
           src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fm=jpg&q=60&w=3000"
@@ -31,7 +30,7 @@ const Feed: React.FC<Props> = () => {
           priority
         />
       </div>
-      <StyledWrapper>
+      <div className="content-wrapper">
         <div
           className="lt"
           css={{
@@ -66,31 +65,94 @@ const Feed: React.FC<Props> = () => {
             <Footer />
           </div>
         </div>
-      </StyledWrapper>
-    </>
+      </div>
+    </StyledWrapper>
   )
 }
 
 export default Feed
 
 const StyledWrapper = styled.div`
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  padding: 2rem 0;
-  display: grid;
-  gap: 1.5rem;
-`
-
-const globalStyles = css`
   .ocean-banner {
     position: relative;
     width: 100%;
     height: 400px;
     margin-bottom: 2rem;
-    border-radius: 0;
     overflow: hidden;
     
     @media (max-width: 768px) {
       height: 200px;
+    }
+  }
+
+  .content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1.5rem;
+
+    .lt {
+      display: none;
+      overflow: scroll;
+      position: sticky;
+      grid-column: span 2 / span 2;
+      top: ${HEADER_HEIGHT - 10}px;
+
+      @media (min-width: 1024px) {
+        display: block;
+      }
+
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    .mid {
+      grid-column: span 12 / span 12;
+
+      @media (min-width: 1024px) {
+        grid-column: span 7 / span 7;
+      }
+
+      .tags {
+        display: block;
+        @media (min-width: 1024px) {
+          display: none;
+        }
+      }
+
+      .footer {
+        padding-bottom: 2rem;
+        @media (min-width: 1024px) {
+          display: none;
+        }
+      }
+    }
+
+    .rt {
+      display: none;
+      overflow: scroll;
+      position: sticky;
+      top: ${HEADER_HEIGHT - 10}px;
+      grid-column: span 3 / span 3;
+
+      @media (min-width: 1024px) {
+        display: block;
+      }
+
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .footer {
+        padding-top: 1rem;
+      }
     }
   }
 `
