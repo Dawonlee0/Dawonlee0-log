@@ -120,9 +120,6 @@ const StyledWrapper = styled.div`
 
       .tags {
         display: block;
-        @media (min-width: 1024px) {
-          display: none;
-        }
       }
 
       .footer {

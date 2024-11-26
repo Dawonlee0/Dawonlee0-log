@@ -77,10 +77,6 @@ const StyledWrapper = styled(Link)`
         min-height: 24px;
         margin-top: 0.5rem;
         
-        @media (min-width: 1024px) {
-          display: flex;  // 큰 화면에서도 flex 유지
-        }
-        
         > div {  // Tag 컴포넌트 스타일
           display: inline-flex;
           align-items: center;
