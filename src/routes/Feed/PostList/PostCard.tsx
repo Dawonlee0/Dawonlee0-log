@@ -16,19 +16,23 @@ const PostCard: React.FC<Props> = ({ data }) => {
       <article>
         <div className="content">
           <h2>{data.title}</h2>
-          <div className="date">{formatDate(data?.date?.start_date || data.createdTime, CONFIG.lang)}</div>
-          <div className="tags">
-            {data.tags && data.tags.map((tag: string) => (
-              <Tag key={tag}>{tag}</Tag>
-            ))}
+          <div className="date">
+            {formatDate(data?.date?.start_date || data.createdTime, CONFIG.lang)}
           </div>
+          {data.tags && data.tags.length > 0 && (
+            <div className="tags">
+              {data.tags.map((tag: string) => (
+                <Tag key={tag}>{tag}</Tag>
+              ))}
+            </div>
+          )}
         </div>
         {data.thumbnail && (
           <div className="thumbnail">
             <Image
               src={data.thumbnail}
-              width={160} // 16:9 비율을 위해 너비 조정
-              height={90} // 16:9 비율을 위해 높이 조정
+              width={160}
+              height={90}
               alt={data.title}
               objectFit="cover"
             />
