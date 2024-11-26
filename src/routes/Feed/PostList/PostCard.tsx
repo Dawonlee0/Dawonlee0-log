@@ -77,7 +77,7 @@ const StyledWrapper = styled(Link)`
         min-height: 24px;
         margin-top: 0.5rem;
         
-        > div {  // Tag 컴포넌트 스타일
+        > div {
           display: inline-flex;
           align-items: center;
           padding: 0.25rem 0.75rem;
@@ -90,6 +90,10 @@ const StyledWrapper = styled(Link)`
           &:hover {
             background-color: ${({ theme }) => theme.colors.gray6};
           }
+        }
+
+        @media (min-width: 1024px) {
+          display: flex;
         }
       }
     }
