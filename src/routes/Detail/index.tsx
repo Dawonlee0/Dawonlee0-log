@@ -13,20 +13,23 @@ const Detail: React.FC<Props> = () => {
   useMermaidEffect()
 
   const handleBackgroundClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      router.back()
+    const clickedElement = e.target as HTMLElement;
+    if (clickedElement.classList.contains('clickable-area')) {
+      router.back();
     }
   }
 
   if (!data) return null
   return (
     <StyledWrapper onClick={handleBackgroundClick}>
+      <div className="clickable-area left" />
       <div className="container">
         <div className="content" data-type={data.type}>
           {data.type[0] === "Page" && <PageDetail />}
           {data.type[0] !== "Page" && <PostDetail />}
         </div>
       </div>
+      <div className="clickable-area right" />
     </StyledWrapper>
   )
 }
