@@ -11,13 +11,21 @@ import ServiceCard from "./ServiceCard"
 import ContactCard from "./ContactCard"
 import PostList from "./PostList"
 import PinnedPosts from "./PostList/PinnedPosts"
+import { useRouter } from "next/router"
 
 const HEADER_HEIGHT = 73
 
 type Props = {}
 
 const Feed: React.FC<Props> = () => {
+  const router = useRouter()
   const [q, setQ] = useState("")
+
+  const handleBackgroundClick = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).classList.contains('content-wrapper')) {
+      router.back()
+    }
+  }
 
   return (
     <StyledWrapper>
@@ -30,7 +38,7 @@ const Feed: React.FC<Props> = () => {
           priority
         />
       </div>
-      <div className="content-wrapper">
+      <div className="content-wrapper" onClick={handleBackgroundClick}>
         <div
           className="lt"
           css={{
@@ -89,6 +97,8 @@ const StyledWrapper = styled.div`
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 1.5rem;
+    min-height: calc(100vh - ${HEADER_HEIGHT}px - 200px);
+    cursor: pointer;
 
     .lt {
       display: none;
