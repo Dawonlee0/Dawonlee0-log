@@ -6,18 +6,26 @@ import Category from "src/components/Category"
 import styled from "@emotion/styled"
 import NotionRenderer from "../components/NotionRenderer"
 import usePostQuery from "src/hooks/usePostQuery"
+import { useRouter } from "next/router"
 
 type Props = {}
 
 const PostDetail: React.FC<Props> = () => {
   const data = usePostQuery()
+  const router = useRouter()
 
   if (!data) return null
 
   const category = (data.category && data.category?.[0]) || undefined
 
+  const handleBackgroundClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      router.back()
+    }
+  }
+
   return (
-    <StyledWrapper>
+    <StyledWrapper onClick={handleBackgroundClick}>
       <article>
         {category && (
           <div css={{ marginBottom: "0.5rem" }}>
@@ -44,19 +52,25 @@ const PostDetail: React.FC<Props> = () => {
 export default PostDetail
 
 const StyledWrapper = styled.div`
+  position: relative;
+  min-height: 100vh;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 3rem;
   padding-bottom: 3rem;
   border-radius: 1.5rem;
-  max-width: 60rem; // [원래 56]
+  max-width: 60rem;
   background-color: ${({ theme }) =>
     theme.scheme === "light" ? "white" : theme.colors.gray4};
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   margin: 0 auto;
+  cursor: pointer;
+
   > article {
+    position: relative;
     margin: 0 auto;
-    max-width: 46rem; // 글 자체 넓이 늘리기 [원래 42]
+    max-width: 46rem;
+    cursor: default;
   }
 `
