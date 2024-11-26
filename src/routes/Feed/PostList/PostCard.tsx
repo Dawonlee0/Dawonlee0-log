@@ -22,11 +22,9 @@ const PostCard: React.FC<Props> = ({ data }) => {
             {formatDate(data?.date?.start_date || data.createdTime, CONFIG.lang)}
           </div>
           <div className="tags">
-            {Array.isArray(data.tags) && data.tags.length > 0 && 
-              data.tags.map((tag: string, i: number) => (
-                <Tag key={`${tag}-${i}`}>{tag}</Tag>
-              ))
-            }
+            {data.tags?.map((tag: string) => (
+              <div key={tag}>{tag}</div>
+            ))}
           </div>
         </div>
         {data.thumbnail && (
