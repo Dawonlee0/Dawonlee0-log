@@ -49,7 +49,7 @@ const StyledWrapper = styled(Link)`
   article {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 1.5rem;
     padding: 1rem;
     border-radius: 1rem;
@@ -58,29 +58,49 @@ const StyledWrapper = styled(Link)`
     .content {
       flex: 1;
       margin-right: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      h2 {
+        margin-bottom: 0.25rem;
+        font-size: 1.125rem;
+        font-weight: 500;
+      }
+
+      .date {
+        font-size: 0.875rem;
+        color: ${({ theme }) => theme.colors.gray10};
+        margin-bottom: 0.5rem;
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.25rem;
+
+        > div {  // Tag 컴포넌트에 대한 스타일
+          padding: 0.25rem 0.75rem;
+          border-radius: 9999px;
+          font-size: 0.75rem;
+          background-color: ${({ theme }) => theme.colors.gray5};
+          color: ${({ theme }) => theme.colors.gray11};
+          cursor: pointer;
+
+          &:hover {
+            background-color: ${({ theme }) => theme.colors.gray6};
+          }
+        }
+      }
     }
 
     .thumbnail {
-      width: 160px; // 16:9 비율을 위해 너비 조정
-      height: 90px; // 16:9 비율을 위해 높이 조정
+      width: 160px;
+      height: 90px;
       border-radius: 1rem;
       overflow: hidden;
-    }
-
-    h2 {
-      margin-bottom: 0.5rem;
-      font-size: 1.125rem;
-      font-weight: 500;
-    }
-
-    .date {
-      color: ${({ theme }) => theme.colors.gray10};
-    }
-
-    .tags {
-      display: flex; // 가로로 나열
-      flex-wrap: wrap; // 여러 줄로 나열 가능
-      gap: 0.5rem; // 태그 간격
+      flex-shrink: 0;
     }
   }
 `
