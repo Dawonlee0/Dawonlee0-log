@@ -24,9 +24,11 @@ const Detail: React.FC<Props> = () => {
     <StyledWrapper onClick={handleBackgroundClick}>
       <div className="clickable-area left" />
       <div className="container">
-        <div className="content" data-type={data.type}>
-          {data.type[0] === "Page" && <PageDetail />}
-          {data.type[0] !== "Page" && <PostDetail />}
+        <div className="content-wrapper">
+          <div className="content" data-type={data.type} onClick={(e) => e.stopPropagation()}>
+            {data.type[0] === "Page" && <PageDetail />}
+            {data.type[0] !== "Page" && <PostDetail />}
+          </div>
         </div>
       </div>
       <div className="clickable-area right" />
@@ -40,19 +42,30 @@ const StyledWrapper = styled.div`
   min-height: 100vh;
   padding: 2rem 0;
   background-color: ${({ theme }) => theme.colors.gray2};
-  cursor: pointer;
+  display: flex;
+  justify-content: center;
+
+  .clickable-area {
+    flex: 1;
+    cursor: pointer;
+    min-width: 50px;
+  }
 
   .container {
+    width: 100%;
     max-width: 1120px;
-    margin: 0 auto;
     padding: 0 1rem;
+    flex-shrink: 0;
+  }
+
+  .content-wrapper {
+    max-width: 60rem;
+    margin: 0 auto;
   }
 
   .content {
     position: relative;
-    max-width: 60rem;
-    margin: 0 auto;
-    cursor: default;
+    width: 100%;
     background-color: ${({ theme }) => 
       theme.scheme === "light" ? "white" : theme.colors.gray4};
     border-radius: 1.5rem;
