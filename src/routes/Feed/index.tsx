@@ -43,9 +43,6 @@ const Feed: React.FC<Props> = () => {
           <MobileProfileCard />
           <PinnedPosts q={q} />
           <SearchInput value={q} onChange={(e) => setQ(e.target.value)} />
-          <div className="tags">
-            <TagList />
-          </div>
           <FeedHeader />
           <PostList q={q} />
           <div className="footer">
@@ -116,10 +113,6 @@ const StyledWrapper = styled.div`
 
       @media (min-width: 1024px) {
         grid-column: span 7 / span 7;
-      }
-
-      .tags {
-        display: block;
       }
 
       .footer {
