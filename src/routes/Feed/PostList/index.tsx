@@ -12,36 +12,42 @@ type Props = {
 const PostList: React.FC<Props> = ({ q }) => {
   const router = useRouter()
   const data = usePostsQuery()
-  const [filteredPosts, setFilteredPosts] = useState(data)
+  const [filteredPosts, setFilteredPosts] = useState<TPost[]>([])
 
   const currentTag = `${router.query.tag || ``}` || undefined
   const currentCategory = `${router.query.category || ``}` || DEFAULT_CATEGORY
   const currentOrder = `${router.query.order || ``}` || "desc"
 
   useEffect(() => {
-    setFilteredPosts(() => {
-      return filterPosts({
-        posts: data,
-        q,
-        tag: currentTag,
-        category: currentCategory,
-        order: currentOrder
-      })
+    if (!data) return
+
+    console.log("Original Posts:", data)
+    
+    const filtered = filterPosts({
+      posts: data,
+      q,
+      tag: currentTag,
+      category: currentCategory,
+      order: currentOrder
     })
+
+    console.log("Filtered Posts:", filtered)
+    
+    setFilteredPosts(filtered)
   }, [data, q, currentTag, currentCategory, currentOrder])
 
   return (
     <>
       <div className="my-2">
-        {filteredPosts.map((post) => (
-          <PostCard 
-            key={post.id} 
-            data={{
-              ...post,
-              tags: post.tags || []
-            }} 
-          />
-        ))}
+        {filteredPosts.map((post) => {
+          console.log("Post being rendered:", post)
+          return (
+            <PostCard 
+              key={post.id} 
+              data={post}
+            />
+          )
+        })}
       </div>
     </>
   )
