@@ -22,7 +22,7 @@ const Feed: React.FC<Props> = () => {
   const [q, setQ] = useState("")
 
   const handleBackgroundClick = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).classList.contains('content-wrapper')) {
+    if (e.target === e.currentTarget) {
       router.back()
     }
   }
