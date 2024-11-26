@@ -19,7 +19,10 @@ const PostList: React.FC<Props> = ({ q }) => {
 
   useEffect(() => {
     setFilteredPosts(() => {
-      let newFilteredPosts = data
+      let newFilteredPosts = [...data]
+      
+      console.log("Original Posts Data:", newFilteredPosts)
+
       // keyword
       newFilteredPosts = newFilteredPosts.filter((post) => {
         const tagContent = post.tags ? post.tags.join(" ") : ""
@@ -27,37 +30,23 @@ const PostList: React.FC<Props> = ({ q }) => {
         return searchContent.toLowerCase().includes(q.toLowerCase())
       })
 
-      // tag
-      if (currentTag) {
-        newFilteredPosts = newFilteredPosts.filter(
-          (post) => post && post.tags && post.tags.includes(currentTag)
-        )
-      }
-
-      // category
-      if (currentCategory !== DEFAULT_CATEGORY) {
-        newFilteredPosts = newFilteredPosts.filter(
-          (post) =>
-            post && post.category && post.category.includes(currentCategory)
-        )
-      }
-      // order
-      if (currentOrder !== "desc") {
-        newFilteredPosts = newFilteredPosts.reverse()
-      }
+      console.log("Filtered Posts:", newFilteredPosts)
 
       return newFilteredPosts
     })
-  }, [q, currentTag, currentCategory, currentOrder, setFilteredPosts])
+  }, [data, q, currentTag, currentCategory, currentOrder])
 
   return (
     <>
       <div className="my-2">
-        {!filteredPosts.length && (
-          <p className="text-gray-500 dark:text-gray-300">Nothing! 😺</p>
-        )}
         {filteredPosts.map((post) => (
-          <PostCard key={post.id} data={post} />
+          <PostCard 
+            key={post.id} 
+            data={{
+              ...post,
+              tags: post.tags || []
+            }} 
+          />
         ))}
       </div>
     </>
