@@ -8,12 +8,18 @@ type Props = {
 
 const Tag: React.FC<Props> = ({ children }) => {
   const router = useRouter()
-
-  const handleClick = (value: string) => {
-    router.push(`/?tag=${value}`)
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    router.push({
+      query: {
+        ...router.query,
+        tag: children,
+      },
+    })
   }
+
   return (
-    <StyledWrapper onClick={() => handleClick(children)}>
+    <StyledWrapper onClick={handleClick}>
       {children}
     </StyledWrapper>
   )
@@ -22,15 +28,18 @@ const Tag: React.FC<Props> = ({ children }) => {
 export default Tag
 
 const StyledWrapper = styled.div`
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  border-radius: 50px;
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
   font-size: 0.75rem;
   line-height: 1rem;
-  font-weight: 400;
-  color: ${({ theme }) => theme.colors.gray10};
   background-color: ${({ theme }) => theme.colors.gray5};
+  color: ${({ theme }) => theme.colors.gray11};
   cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.gray6};
+    color: ${({ theme }) => theme.colors.gray12};
+  }
 `

@@ -78,20 +78,9 @@ const StyledWrapper = styled(Link)`
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
-        margin-top: 0.25rem;
-
-        > div {  // Tag 컴포넌트에 대한 스타일
-          padding: 0.25rem 0.75rem;
-          border-radius: 9999px;
-          font-size: 0.75rem;
-          background-color: ${({ theme }) => theme.colors.gray5};
-          color: ${({ theme }) => theme.colors.gray11};
-          cursor: pointer;
-
-          &:hover {
-            background-color: ${({ theme }) => theme.colors.gray6};
-          }
-        }
+        margin-top: 0.5rem;
+        margin-bottom: 0.25rem;
+        min-height: 24px;
       }
     }
 
