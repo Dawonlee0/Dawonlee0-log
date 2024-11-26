@@ -14,7 +14,7 @@ const Detail: React.FC<Props> = () => {
 
   const handleBackgroundClick = (e: React.MouseEvent) => {
     const clickedElement = e.target as HTMLElement;
-    if (clickedElement.classList.contains('clickable-area')) {
+    if (!clickedElement.closest('.container') && clickedElement.classList.contains('clickable-area')) {
       router.back();
     }
   }
@@ -24,11 +24,9 @@ const Detail: React.FC<Props> = () => {
     <StyledWrapper onClick={handleBackgroundClick}>
       <div className="clickable-area left" />
       <div className="container">
-        <div className="content-wrapper">
-          <div className="content" data-type={data.type} onClick={(e) => e.stopPropagation()}>
-            {data.type[0] === "Page" && <PageDetail />}
-            {data.type[0] !== "Page" && <PostDetail />}
-          </div>
+        <div className="content" data-type={data.type}>
+          {data.type[0] === "Page" && <PageDetail />}
+          {data.type[0] !== "Page" && <PostDetail />}
         </div>
       </div>
       <div className="clickable-area right" />
@@ -43,7 +41,6 @@ const StyledWrapper = styled.div`
   padding: 2rem 0;
   background-color: ${({ theme }) => theme.colors.gray2};
   display: flex;
-  justify-content: center;
 
   .clickable-area {
     flex: 1;
@@ -53,14 +50,9 @@ const StyledWrapper = styled.div`
 
   .container {
     width: 100%;
-    max-width: 1120px;
-    padding: 0 1rem;
-    flex-shrink: 0;
-  }
-
-  .content-wrapper {
     max-width: 60rem;
     margin: 0 auto;
+    flex-shrink: 0;
   }
 
   .content {
