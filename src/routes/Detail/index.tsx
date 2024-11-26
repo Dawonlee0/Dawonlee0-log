@@ -39,12 +39,13 @@ const StyledWrapper = styled.div`
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 1rem;
+    display: flex;
+    gap: 2rem;
   }
 
   .container {
-    width: 100%;
+    flex: 1;
     max-width: 60rem;
-    margin: 0 auto;
   }
 
   .content {

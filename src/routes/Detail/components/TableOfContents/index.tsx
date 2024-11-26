@@ -76,12 +76,11 @@ const TableOfContents = () => {
 export default TableOfContents
 
 const StyledWrapper = styled.div`
-  position: fixed;
+  position: sticky;
   top: 120px;
-  right: 40px;
   width: 240px;
-  max-height: calc(100vh - 200px);
-  overflow-y: auto;
+  height: fit-content;
+  flex-shrink: 0;
   
   nav {
     padding: 1rem;
@@ -125,22 +124,5 @@ const StyledWrapper = styled.div`
 
   @media (max-width: 1400px) {
     display: none;
-  }
-
-  /* 스크롤바 스타일링 */
-  scrollbar-width: thin;
-  scrollbar-color: ${({ theme }) => theme.colors.gray6} transparent;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.gray6};
-    border-radius: 3px;
   }
 ` 
