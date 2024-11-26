@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import PostCard from "src/routes/Feed/PostList/PostCard"
 import { DEFAULT_CATEGORY } from "src/constants"
 import usePostsQuery from "src/hooks/usePostsQuery"
-import filterPosts from "src/utils/filterPosts"
+import { filterPosts } from "./filterPosts"
 
 type Props = {
   q: string
