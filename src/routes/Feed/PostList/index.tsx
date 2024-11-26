@@ -4,6 +4,7 @@ import PostCard from "src/routes/Feed/PostList/PostCard"
 import { DEFAULT_CATEGORY } from "src/constants"
 import usePostsQuery from "src/hooks/usePostsQuery"
 import { filterPosts } from "./filterPosts"
+import { TPost } from "src/types"
 
 type Props = {
   q: string
