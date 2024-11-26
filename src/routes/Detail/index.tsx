@@ -21,9 +21,11 @@ const Detail: React.FC<Props> = () => {
   if (!data) return null
   return (
     <StyledWrapper onClick={handleBackgroundClick}>
-      <div className="content" data-type={data.type}>
-        {data.type[0] === "Page" && <PageDetail />}
-        {data.type[0] !== "Page" && <PostDetail />}
+      <div className="container">
+        <div className="content" data-type={data.type}>
+          {data.type[0] === "Page" && <PageDetail />}
+          {data.type[0] !== "Page" && <PostDetail />}
+        </div>
       </div>
     </StyledWrapper>
   )
@@ -32,20 +34,27 @@ const Detail: React.FC<Props> = () => {
 export default Detail
 
 const StyledWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  min-height: 100vh;
   padding: 2rem 0;
-  cursor: pointer;
   background-color: ${({ theme }) => theme.colors.gray2};
+  cursor: pointer;
+
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
 
   .content {
     position: relative;
     max-width: 60rem;
     margin: 0 auto;
     cursor: default;
+    background-color: ${({ theme }) => 
+      theme.scheme === "light" ? "white" : theme.colors.gray4};
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
     
     &[data-type="Paper"] {
       padding: 40px 0;
