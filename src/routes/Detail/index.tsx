@@ -14,13 +14,15 @@ const Detail: React.FC<Props> = () => {
   if (!data) return null
   return (
     <StyledWrapper>
-      <div className="container">
-        <div className="content" data-type={data.type}>
-          {data.type[0] === "Page" && <PageDetail />}
-          {data.type[0] !== "Page" && <PostDetail />}
+      <div className="inner">
+        <div className="container">
+          <div className="content" data-type={data.type}>
+            {data.type[0] === "Page" && <PageDetail />}
+            {data.type[0] !== "Page" && <PostDetail />}
+          </div>
         </div>
+        <TableOfContents />
       </div>
-      <TableOfContents />
     </StyledWrapper>
   )
 }
@@ -31,6 +33,13 @@ const StyledWrapper = styled.div`
   min-height: 100vh;
   padding: 2rem 0;
   background-color: ${({ theme }) => theme.colors.gray2};
+
+  .inner {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
 
   .container {
     width: 100%;
