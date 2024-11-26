@@ -23,7 +23,7 @@ const PostCard: React.FC<Props> = ({ data }) => {
           </div>
           <div className="tags">
             {data.tags?.map((tag: string) => (
-              <Tag key={tag} text={tag} />
+              <div key={tag}>{tag}</div>
             ))}
           </div>
         </div>
