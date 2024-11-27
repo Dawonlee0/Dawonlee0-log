@@ -2,6 +2,7 @@ import Link from "next/link"
 import { CONFIG } from "site.config"
 import { formatDate } from "src/libs/utils"
 import Tag from "../../../components/Tag"
+import Category from "../../../components/Category"
 import { TPost } from "../../../types"
 import Image from "next/image"
 import styled from "@emotion/styled"
@@ -18,6 +19,11 @@ const PostCard: React.FC<Props> = ({ data }) => {
       <article>
         <div className="content">
           <h2>{data.title}</h2>
+          {data.category && (
+            <div className="category">
+              <Category readOnly>{data.category}</Category>
+            </div>
+          )}
           <div className="date">
             {formatDate(data?.date?.start_date || data.createdTime, CONFIG.lang)}
           </div>
@@ -95,6 +101,10 @@ const StyledWrapper = styled(Link)`
         @media (min-width: 1024px) {
           display: flex;
         }
+      }
+
+      .category {
+        margin-bottom: 0.5rem;
       }
     }
 
