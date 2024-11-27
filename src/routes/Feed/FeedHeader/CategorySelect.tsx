@@ -30,7 +30,7 @@ const CategorySelect: React.FC = () => {
         <div className="current-category">
           {currentCategory === DEFAULT_CATEGORY ? (
             <>
-              <Emoji>📂</Emoji> All Posts
+              <Emoji>🗂️</Emoji> All Posts
             </>
           ) : (
             `${currentCategory} Posts`
@@ -47,7 +47,7 @@ const CategorySelect: React.FC = () => {
               onClick={() => handleOptionClick(key)}
             >
               <div className="category-name">
-                <Emoji>{key === DEFAULT_CATEGORY ? "📂" : "📄"}</Emoji>
+                {key === DEFAULT_CATEGORY && <Emoji>🗂️</Emoji>}
                 {key}
               </div>
               <span className="count">({data[key]})</span>
