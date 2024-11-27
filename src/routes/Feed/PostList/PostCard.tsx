@@ -32,6 +32,11 @@ const PostCard: React.FC<Props> = ({ data }) => {
               <div key={tag}>{tag}</div>
             ))}
           </div>
+          <div className="categories">
+            {data.categories?.map((category) => (
+              <Category key={category}>{category}</Category>
+            ))}
+          </div>
         </div>
         {data.thumbnail && (
           <div className="thumbnail">
@@ -105,6 +110,12 @@ const StyledWrapper = styled(Link)`
         @media (min-width: 1024px) {
           display: flex;
         }
+      }
+
+      .categories {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
       }
     }
 
