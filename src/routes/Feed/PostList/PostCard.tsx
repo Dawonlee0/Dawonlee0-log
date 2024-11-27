@@ -18,7 +18,7 @@ const PostCard: React.FC<Props> = ({ data }) => {
         <div className="content">
           {data.category && (
             <div className="category">
-              <Category readOnly>{data.category}</Category>
+              <Category>{data.category}</Category>
             </div>
           )}
           <h2>{data.title}</h2>
