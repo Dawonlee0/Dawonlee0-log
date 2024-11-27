@@ -28,7 +28,14 @@ const CategorySelect: React.FC = () => {
     <StyledWrapper>
       <div ref={dropdownRef} className="wrapper" onClick={handleOpen}>
         <div className="current-category">
-          {currentCategory} Posts <MdExpandMore />
+          {currentCategory === DEFAULT_CATEGORY ? (
+            <>
+              <Emoji>📂</Emoji> All Posts
+            </>
+          ) : (
+            `${currentCategory} Posts`
+          )}
+          <MdExpandMore />
         </div>
       </div>
       {opened && (
@@ -61,12 +68,8 @@ const StyledWrapper = styled.div`
       margin: 0.5rem 0;
       padding: 0.5rem;
       cursor: pointer;
-      font-size: 1.25rem;
+      font-size: 1.125rem;  // 폰트 사이즈 줄임
       font-weight: 600;
-      
-      .category-text {
-        margin-top: 2px;
-      }
       
       &:hover {
         opacity: 0.8;
@@ -91,19 +94,8 @@ const StyledWrapper = styled.div`
       padding: 0.5rem;
       border-radius: 0.5rem;
       cursor: pointer;
+      font-size: 0.875rem;  // 드롭다운 아이템 폰트 사이즈도 약간 줄임
       
-      .category-item {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 1rem;
-      }
-      
-      .count {
-        font-size: 0.875rem;
-        color: ${({ theme }) => theme.colors.gray10};
-      }
-
       &:hover {
         background-color: ${({ theme }) => theme.colors.gray4};
       }
