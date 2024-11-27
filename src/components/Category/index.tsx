@@ -1,22 +1,19 @@
 import { useRouter } from "next/router"
-import React from "react"
+import React, { useMemo } from "react"
 import styled from "@emotion/styled"
 import { colors } from "src/styles"
 
-// HSL 색상을 사용하여 카테고리별 고유 색상 생성
 const generatePastelColor = (str: string): string => {
-  let hash = 0
-  for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash)
-  }
+  if (!str) return "hsl(0, 0%, 90%)"
   
-  // HSL 색상 생성
-  // Hue: 0-360 (색상), 
-  // Saturation: 65-85% (파스텔톤을 위해), 
-  // Lightness: 80-90% (밝은 톤 유지)
-  const h = hash % 360
-  const s = 65 + (hash % 20) // 65-85% 사이의 채도
-  const l = 80 + (hash % 10) // 80-90% 사이의 밝기
+  const hash = str.split("").reduce((acc, char) => {
+    const chr = char.charCodeAt(0)
+    return ((acc << 5) - acc) + chr | 0
+  }, 0)
+
+  const h = Math.abs(hash) % 360
+  const s = 70
+  const l = 85
 
   return `hsl(${h}, ${s}%, ${l}%)`
 }
@@ -28,6 +25,10 @@ type Props = {
 
 const Category: React.FC<Props> = ({ readOnly = false, children }) => {
   const router = useRouter()
+  
+  const backgroundColor = useMemo(() => 
+    generatePastelColor(children), [children]
+  )
 
   const handleClick = (value: string) => {
     if (readOnly) return
@@ -38,7 +39,7 @@ const Category: React.FC<Props> = ({ readOnly = false, children }) => {
     <StyledWrapper
       onClick={() => handleClick(children)}
       css={{
-        backgroundColor: generatePastelColor(children),
+        backgroundColor,
         cursor: readOnly ? "default" : "pointer",
       }}
     >
