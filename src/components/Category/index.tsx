@@ -19,8 +19,8 @@ const generatePastelColor = (input: unknown): string => {
     }
 
     const h = Math.abs(hash) % 360
-    const s = 70
-    const l = 85
+    const s = 60
+    const l = 75
 
     return `hsl(${h}, ${s}%, ${l}%)`
   } catch {
@@ -70,7 +70,8 @@ const StyledWrapper = styled.div`
   font-size: 0.875rem;
   line-height: 1.25rem;
   opacity: 0.9;
-  color: ${({ theme }) => theme.colors.gray12};
+  color: ${({ theme }) => theme.scheme === 'dark' ? theme.colors.gray1 : theme.colors.gray12};
+  font-weight: 500;
   transition: all 0.2s ease;
 
   &:hover {
