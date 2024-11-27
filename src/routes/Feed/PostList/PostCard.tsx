@@ -12,8 +12,6 @@ type Props = {
 }
 
 const PostCard: React.FC<Props> = ({ data }) => {
-  console.log("Post Tags:", data.tags)
-
   return (
     <StyledWrapper href={`/${data.slug}`}>
       <article>
@@ -30,11 +28,6 @@ const PostCard: React.FC<Props> = ({ data }) => {
           <div className="tags">
             {data.tags?.map((tag: string) => (
               <div key={tag}>{tag}</div>
-            ))}
-          </div>
-          <div className="categories">
-            {data.categories?.map((category) => (
-              <Category key={category}>{category}</Category>
             ))}
           </div>
         </div>
@@ -110,12 +103,6 @@ const StyledWrapper = styled(Link)`
         @media (min-width: 1024px) {
           display: flex;
         }
-      }
-
-      .categories {
-        display: flex;
-        gap: 0.5rem;
-        margin-top: 0.5rem;
       }
     }
 
