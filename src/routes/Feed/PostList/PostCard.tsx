@@ -18,12 +18,12 @@ const PostCard: React.FC<Props> = ({ data }) => {
     <StyledWrapper href={`/${data.slug}`}>
       <article>
         <div className="content">
-          <h2>{data.title}</h2>
           {data.category && (
             <div className="category">
               <Category readOnly>{data.category}</Category>
             </div>
           )}
+          <h2>{data.title}</h2>
           <div className="date">
             {formatDate(data?.date?.start_date || data.createdTime, CONFIG.lang)}
           </div>
@@ -65,6 +65,10 @@ const StyledWrapper = styled(Link)`
       flex: 1;
       margin-right: 1rem;
 
+      .category {
+        margin-bottom: 0.5rem;
+      }
+
       h2 {
         margin-bottom: 0.5rem;
         font-size: 1.125rem;
@@ -101,10 +105,6 @@ const StyledWrapper = styled(Link)`
         @media (min-width: 1024px) {
           display: flex;
         }
-      }
-
-      .category {
-        margin-bottom: 0.5rem;
       }
     }
 

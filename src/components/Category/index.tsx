@@ -1,20 +1,24 @@
 import { useRouter } from "next/router"
 import React from "react"
-import { COLOR_SET } from "./constants"
 import styled from "@emotion/styled"
 import { colors } from "src/styles"
 
-export const getColorClassByName = (name: string): string => {
-  try {
-    let sum = 0
-    name.split("").forEach((alphabet) => (sum = sum + alphabet.charCodeAt(0)))
-    const colorKey = sum
-      .toString(16)
-      ?.[sum.toString(16).length - 1].toUpperCase()
-    return COLOR_SET[colorKey]
-  } catch {
-    return COLOR_SET[0]
+// HSL 색상을 사용하여 카테고리별 고유 색상 생성
+const generatePastelColor = (str: string): string => {
+  let hash = 0
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash)
   }
+  
+  // HSL 색상 생성
+  // Hue: 0-360 (색상), 
+  // Saturation: 65-85% (파스텔톤을 위해), 
+  // Lightness: 80-90% (밝은 톤 유지)
+  const h = hash % 360
+  const s = 65 + (hash % 20) // 65-85% 사이의 채도
+  const l = 80 + (hash % 10) // 80-90% 사이의 밝기
+
+  return `hsl(${h}, ${s}%, ${l}%)`
 }
 
 type Props = {
@@ -29,11 +33,12 @@ const Category: React.FC<Props> = ({ readOnly = false, children }) => {
     if (readOnly) return
     router.push(`/?category=${value}`)
   }
+
   return (
     <StyledWrapper
       onClick={() => handleClick(children)}
       css={{
-        backgroundColor: getColorClassByName(children),
+        backgroundColor: generatePastelColor(children),
         cursor: readOnly ? "default" : "pointer",
       }}
     >
@@ -54,5 +59,11 @@ const StyledWrapper = styled.div`
   font-size: 0.875rem;
   line-height: 1.25rem;
   opacity: 0.9;
-  color: ${colors.dark.gray1};
+  color: ${({ theme }) => theme.colors.gray12};
+  transition: all 0.2s ease;
+
+  &:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+  }
 `
