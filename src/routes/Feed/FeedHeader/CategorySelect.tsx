@@ -6,10 +6,9 @@ import { DEFAULT_CATEGORY } from "src/constants"
 import styled from "@emotion/styled"
 import { useCategoriesQuery } from "src/hooks/useCategoriesQuery"
 import Category from "src/components/Category"
+import { Emoji } from "src/components/Emoji"
 
-type Props = {}
-
-const CategorySelect: React.FC<Props> = () => {
+const CategorySelect: React.FC = () => {
   const router = useRouter()
   const data = useCategoriesQuery()
   const [dropdownRef, opened, handleOpen] = useDropdown()
@@ -24,11 +23,14 @@ const CategorySelect: React.FC<Props> = () => {
       },
     })
   }
+
   return (
     <StyledWrapper>
       <div ref={dropdownRef} className="wrapper" onClick={handleOpen}>
-        <Category>{currentCategory}</Category>
-        <MdExpandMore />
+        <div className="current-category">
+          <span className="category-text">{currentCategory}</span>
+          <MdExpandMore size={20} />
+        </div>
       </div>
       {opened && (
         <div className="content">
@@ -38,7 +40,9 @@ const CategorySelect: React.FC<Props> = () => {
               key={idx}
               onClick={() => handleOptionClick(key)}
             >
-              <Category readOnly>{key}</Category>
+              <div className="category-item">
+                <span>{key}</span>
+              </div>
               <span className="count">{`(${data[key]})`}</span>
             </div>
           ))}
@@ -52,32 +56,52 @@ export default CategorySelect
 
 const StyledWrapper = styled.div`
   position: relative;
-  > .wrapper {
-    display: flex;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-    gap: 0.5rem;
-    align-items: center;
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    cursor: pointer;
+  
+  .wrapper {
+    .current-category {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      cursor: pointer;
+      font-size: 1.25rem;
+      font-weight: 600;
+      
+      .category-text {
+        margin-top: 2px;
+      }
+      
+      &:hover {
+        opacity: 0.8;
+      }
+    }
   }
-  > .content {
+
+  .content {
     position: absolute;
     z-index: 40;
+    min-width: 220px;
     padding: 0.5rem;
     border-radius: 0.75rem;
     background-color: ${({ theme }) => theme.colors.gray2};
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -1px rgba(0, 0, 0, 0.06);
     
-    > .item {
+    .item {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.25rem;
-      border-radius: 0.75rem;
+      justify-content: space-between;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
       cursor: pointer;
+      
+      .category-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
       
       .count {
         font-size: 0.875rem;
