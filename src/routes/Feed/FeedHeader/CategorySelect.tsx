@@ -46,7 +46,11 @@ const CategorySelect: React.FC = () => {
               key={idx}
               onClick={() => handleOptionClick(key)}
             >
-              {`${key} (${data[key]})`}
+              <div className="category-name">
+                <Emoji>{key === DEFAULT_CATEGORY ? "📂" : "📄"}</Emoji>
+                {key}
+              </div>
+              <span className="count">({data[key]})</span>
             </div>
           ))}
         </div>
@@ -66,9 +70,9 @@ const StyledWrapper = styled.div`
       align-items: center;
       gap: 0.5rem;
       margin: 0.5rem 0;
-      padding: 0.5rem;
+      padding: 0.25rem;
       cursor: pointer;
-      font-size: 1.125rem;  // 폰트 사이즈 줄임
+      font-size: 1rem;
       font-weight: 600;
       
       &:hover {
@@ -80,9 +84,9 @@ const StyledWrapper = styled.div`
   .content {
     position: absolute;
     z-index: 40;
-    min-width: 220px;
-    padding: 0.5rem;
-    border-radius: 0.75rem;
+    min-width: 200px;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
     background-color: ${({ theme }) => theme.colors.gray2};
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -91,11 +95,22 @@ const StyledWrapper = styled.div`
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.5rem;
-      border-radius: 0.5rem;
+      padding: 0.375rem 0.5rem;
+      border-radius: 0.375rem;
       cursor: pointer;
-      font-size: 0.875rem;  // 드롭다운 아이템 폰트 사이즈도 약간 줄임
+      font-size: 0.875rem;
       
+      .category-name {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .count {
+        color: ${({ theme }) => theme.colors.gray10};
+        font-size: 0.75rem;
+      }
+
       &:hover {
         background-color: ${({ theme }) => theme.colors.gray4};
       }
