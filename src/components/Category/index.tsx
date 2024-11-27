@@ -1,65 +1,35 @@
 import { useRouter } from "next/router"
-import React, { useMemo } from "react"
+import React from "react"
+import { COLOR_SET } from "./constants"
 import styled from "@emotion/styled"
-import { PASTEL_COLORS } from './constants'
+import { colors } from "src/styles"
 
-// 수정: 색상 생성 함수를 캐시로 관리
-const colorCache: { [key: string]: string } = {}
-
-const generateCategoryColor = (input: unknown): string => {
-  const defaultColor = "hsl(0, 0%, 90%)"
-  
-  if (!input || typeof input !== 'string') {
-    return defaultColor
-  }
-
-  const str = String(input).trim()
-  if (!str) return defaultColor
-
-  // 캐시된 색상이 있으면 반환
-  if (colorCache[str]) {
-    return colorCache[str]
-  }
-
+export const getColorClassByName = (name: string): string => {
   try {
-    let hash = 0
-    for (let i = 0; i < str.length; i++) {
-      hash = str.charCodeAt(i) + ((hash << 5) - hash)
-    }
-
-    const colorIndex = Math.abs(hash) % PASTEL_COLORS.length
-    const color = PASTEL_COLORS[colorIndex]
-    
-    // 새로운 색상을 캐시에 저장
-    colorCache[str] = color
-    return color
+    let sum = 0
+    name.split("").forEach((alphabet) => (sum = sum + alphabet.charCodeAt(0)))
+    const colorKey = sum
+      .toString(16)
+      ?.[sum.toString(16).length - 1].toUpperCase()
+    return COLOR_SET[colorKey]
   } catch {
-    return defaultColor
+    return COLOR_SET[0]
   }
-}
-
-type Props = {
-  children: string
-  readOnly?: boolean
 }
 
 const Category: React.FC<Props> = ({ readOnly = false, children }) => {
   const router = useRouter()
-  
-  const backgroundColor = useMemo(() => {
-    return generateCategoryColor(children)
-  }, [children])
 
   const handleClick = (value: string) => {
     if (readOnly) return
     router.push(`/?category=${value}`)
   }
-
+  
   return (
     <StyledWrapper
       onClick={() => handleClick(children)}
-      style={{
-        backgroundColor,
+      css={{
+        backgroundColor: getColorClassByName(children),
         cursor: readOnly ? "default" : "pointer",
       }}
     >
@@ -80,14 +50,5 @@ const StyledWrapper = styled.div`
   font-size: 0.875rem;
   line-height: 1.25rem;
   opacity: 0.9;
-  color: ${({ theme }) => theme.scheme === 'dark' ? theme.colors.gray1 : theme.colors.gray12};
-  font-weight: 500;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-
-  &:hover {
-    opacity: 1;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+  color: ${colors.dark.gray1};
 `

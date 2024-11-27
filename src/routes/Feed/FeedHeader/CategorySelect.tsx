@@ -28,8 +28,7 @@ const CategorySelect: React.FC = () => {
     <StyledWrapper>
       <div ref={dropdownRef} className="wrapper" onClick={handleOpen}>
         <div className="current-category">
-          <span className="category-text">{currentCategory}</span>
-          <MdExpandMore size={20} />
+          {currentCategory} Posts <MdExpandMore />
         </div>
       </div>
       {opened && (
@@ -40,10 +39,7 @@ const CategorySelect: React.FC = () => {
               key={idx}
               onClick={() => handleOptionClick(key)}
             >
-              <div className="category-item">
-                <span>{key}</span>
-              </div>
-              <span className="count">{`(${data[key]})`}</span>
+              {`${key} (${data[key]})`}
             </div>
           ))}
         </div>
