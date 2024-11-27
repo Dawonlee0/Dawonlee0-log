@@ -2,19 +2,30 @@ import { useRouter } from "next/router"
 import React, { useMemo } from "react"
 import styled from "@emotion/styled"
 
-const generatePastelColor = (str: string): string => {
-  if (!str) return "hsl(0, 0%, 90%)"
+const generatePastelColor = (input: unknown): string => {
+  const defaultColor = "hsl(0, 0%, 90%)"
   
-  const hash = str.split("").reduce((acc, char) => {
-    const chr = char.charCodeAt(0)
-    return ((acc << 5) - acc) + chr | 0
-  }, 0)
+  if (!input || typeof input !== 'string') {
+    return defaultColor
+  }
 
-  const h = Math.abs(hash) % 360
-  const s = 70
-  const l = 85
+  try {
+    const str = String(input).trim()
+    if (!str) return defaultColor
 
-  return `hsl(${h}, ${s}%, ${l}%)`
+    let hash = 0
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash)
+    }
+
+    const h = Math.abs(hash) % 360
+    const s = 70
+    const l = 85
+
+    return `hsl(${h}, ${s}%, ${l}%)`
+  } catch {
+    return defaultColor
+  }
 }
 
 type Props = {
@@ -25,9 +36,9 @@ type Props = {
 const Category: React.FC<Props> = ({ readOnly = false, children }) => {
   const router = useRouter()
   
-  const backgroundColor = useMemo(() => 
-    generatePastelColor(children), [children]
-  )
+  const backgroundColor = useMemo(() => {
+    return generatePastelColor(children)
+  }, [children])
 
   const handleClick = (value: string) => {
     if (readOnly) return
