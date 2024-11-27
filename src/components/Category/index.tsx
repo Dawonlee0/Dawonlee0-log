@@ -14,6 +14,9 @@ const PASTEL_COLORS = [
   "hsl(20, 90%, 85%)",   // 주황색
 ]
 
+// 수정: 색상 생성 함수를 캐시로 관리
+const colorCache: { [key: string]: string } = {}
+
 const generateCategoryColor = (input: unknown): string => {
   const defaultColor = "hsl(0, 0%, 90%)"
   
@@ -21,19 +24,26 @@ const generateCategoryColor = (input: unknown): string => {
     return defaultColor
   }
 
-  try {
-    const str = String(input).trim()
-    if (!str) return defaultColor
+  const str = String(input).trim()
+  if (!str) return defaultColor
 
-    // 문자열의 해시값을 색상 배열의 인덱스로 사용
+  // 캐시된 색상이 있으면 반환
+  if (colorCache[str]) {
+    return colorCache[str]
+  }
+
+  try {
     let hash = 0
     for (let i = 0; i < str.length; i++) {
       hash = str.charCodeAt(i) + ((hash << 5) - hash)
     }
 
-    // 색상 배열의 길이로 나눈 나머지를 사용하여 색상 선택
     const colorIndex = Math.abs(hash) % PASTEL_COLORS.length
-    return PASTEL_COLORS[colorIndex]
+    const color = PASTEL_COLORS[colorIndex]
+    
+    // 새로운 색상을 캐시에 저장
+    colorCache[str] = color
+    return color
   } catch {
     return defaultColor
   }
