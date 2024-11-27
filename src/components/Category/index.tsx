@@ -4,6 +4,11 @@ import { COLOR_SET } from "./constants"
 import styled from "@emotion/styled"
 import { colors } from "src/styles"
 
+type Props = {
+  children: string
+  readOnly?: boolean
+}
+
 export const getColorClassByName = (name: string): string => {
   try {
     let sum = 0
