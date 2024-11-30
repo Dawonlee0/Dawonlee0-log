@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import React from "react"
-import { COLOR_SET } from "./constants"
+import { COLOR_SET, CATEGORY_COLOR_MAP } from "./constants"
 import styled from "@emotion/styled"
 import { colors } from "src/styles"
 
@@ -10,16 +10,14 @@ type Props = {
 }
 
 export const getColorClassByName = (name: string): string => {
-  try {
-    let sum = 0
-    name.split("").forEach((alphabet) => (sum = sum + alphabet.charCodeAt(0)))
-    const colorKey = sum
-      .toString(16)
-      ?.[sum.toString(16).length - 1].toUpperCase()
-    return COLOR_SET[colorKey]
-  } catch {
-    return COLOR_SET[0]
-  }
+  if (!name) return COLOR_SET["0"]
+  
+  // 부분 문자열 매칭으로 카테고리 찾기
+  const matchedCategory = Object.keys(CATEGORY_COLOR_MAP).find(key => 
+    name.includes(key) || key.includes(name)
+  )
+  
+  return matchedCategory ? CATEGORY_COLOR_MAP[matchedCategory] : COLOR_SET["0"]
 }
 
 const Category: React.FC<Props> = ({ readOnly = false, children }) => {

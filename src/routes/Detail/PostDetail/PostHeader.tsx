@@ -43,16 +43,17 @@ export default PostHeader
 const StyledWrapper = styled.div`
   .header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     margin-bottom: 1rem;
   }
   .title {
     font-size: 1.875rem;
     font-weight: 700;
+    margin-bottom: 0.5rem;
   }
   .date {
     color: ${({ theme }) => theme.colors.gray11};
+    font-size: 0.95rem;
   }
   .tags {
     margin-bottom: 1rem;

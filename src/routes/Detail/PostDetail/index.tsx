@@ -52,25 +52,17 @@ const PostDetail: React.FC<Props> = () => {
 export default PostDetail
 
 const StyledWrapper = styled.div`
-  position: relative;
-  min-height: 100vh;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-  border-radius: 1.5rem;
-  max-width: 60rem;
+  padding: 3rem 1.5rem;
   background-color: ${({ theme }) =>
     theme.scheme === "light" ? "white" : theme.colors.gray4};
+  border-radius: 1.5rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  max-width: 55rem;
   margin: 0 auto;
-  cursor: pointer;
-
+  
   > article {
-    position: relative;
     margin: 0 auto;
-    max-width: 46rem;
-    cursor: default;
+    max-width: 42rem;
   }
 `

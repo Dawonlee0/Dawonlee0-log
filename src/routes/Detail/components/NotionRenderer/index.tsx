@@ -79,7 +79,6 @@ const NotionRenderer: FC<Props> = ({ recordMap }) => {
 export default NotionRenderer
 
 const StyledWrapper = styled.div`
-  /* // TODO: why render? */
   .notion-collection-page-properties {
     display: none !important;
   }
