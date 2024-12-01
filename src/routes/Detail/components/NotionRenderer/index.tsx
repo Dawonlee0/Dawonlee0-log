@@ -88,4 +88,115 @@ const StyledWrapper = styled.div`
   .notion-list {
     width: 100%;
   }
+
+  /* 코드 블록 스타일 */
+  .notion-code {
+    position: relative !important;
+    background: ${({ theme }) => 
+      theme.scheme === "dark"
+        ? "rgba(255, 255, 255, 0.05)"
+        : "rgba(0, 0, 0, 0.05)"} !important;
+    border: 1px solid ${({ theme }) => 
+      theme.scheme === "dark"
+        ? "rgba(255, 255, 255, 0.1)"
+        : "rgba(0, 0, 0, 0.1)"} !important;
+    border-radius: 0.5rem !important;
+  }
+
+  .notion-code > code {
+    &::before {
+      content: attr(class) !important;
+      position: absolute !important;
+      top: 0 !important;
+      right: 0 !important;
+      padding: 0.25rem 0.75rem !important;
+      font-size: 0.75rem !important;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol" !important;
+      color: ${({ theme }) => 
+        theme.scheme === "dark"
+          ? theme.colors.gray9
+          : theme.colors.gray9} !important;
+      background: ${({ theme }) => 
+        theme.scheme === "dark"
+          ? "rgba(255, 255, 255, 0.1)"
+          : "rgba(0, 0, 0, 0.1)"} !important;
+      border-bottom-left-radius: 0.5rem !important;
+      text-transform: uppercase !important;
+    }
+  }
+
+  /* 코드 블록 내부 스타일 */
+  .notion-code > code {
+    color: ${({ theme }) => 
+      theme.scheme === "dark"
+        ? theme.colors.gray12
+        : theme.colors.gray12} !important;
+    background: transparent !important;
+    padding: 1.25rem !important;
+  }
+
+  /* 제목 스타일 개선 */
+  .notion-h1 {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    margin: 3.5rem 0 2rem !important;
+    color: ${({ theme }) => theme.colors.gray12} !important;
+    line-height: 1.3 !important;
+    padding-bottom: 0.5rem !important;
+    border-bottom: 2px solid ${({ theme }) => theme.colors.gray6} !important;
+    transition: all 0.2s ease !important;
+
+    &:hover {
+      border-bottom-color: ${({ theme }) => theme.colors.gray8} !important;
+    }
+  }
+
+  .notion-h2 {
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    margin: 2.5rem 0 1.5rem !important;
+    color: ${({ theme }) => theme.colors.gray12} !important;
+    line-height: 1.4 !important;
+    padding-left: 1rem !important;
+    border-left: 3px solid ${({ theme }) => theme.colors.gray6} !important;
+    transition: all 0.2s ease !important;
+
+    &:hover {
+      border-left-color: ${({ theme }) => theme.colors.gray8} !important;
+      padding-left: 1.5rem !important;
+    }
+  }
+
+  .notion-h3 {
+    font-size: 1.2rem !important;
+    font-weight: 500 !important;
+    margin: 2rem 0 1rem !important;
+    color: ${({ theme }) => theme.colors.gray11} !important;
+    line-height: 1.5 !important;
+    transition: all 0.2s ease !important;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.gray12} !important;
+      padding-left: 0.5rem !important;
+    }
+  }
+
+  /* 모바일 대응 */
+  @media (max-width: 768px) {
+    .notion-h1 {
+      font-size: 1.75rem !important;
+      margin: 3rem 0 1.5rem !important;
+    }
+
+    .notion-h2 {
+      font-size: 1.375rem !important;
+      margin: 2.5rem 0 1.25rem !important;
+      padding-left: 0.875rem !important;
+    }
+
+    .notion-h3 {
+      font-size: 1.125rem !important;
+      margin: 2rem 0 1rem !important;
+    }
+  }
 `
