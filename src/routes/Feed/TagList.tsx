@@ -38,7 +38,9 @@ const TagList: React.FC<Props> = () => {
         <Emoji>🏷️</Emoji> Tags
       </div>
       <div className="list">
-        {Object.keys(data).map((key) => (
+        {Object.keys(data)
+          .sort((a, b) => a.localeCompare(b))
+          .map((key) => (
           <a
             key={key}
             data-active={key === currentTag}
