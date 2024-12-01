@@ -20,9 +20,8 @@ const Utterances: React.FC<Props> = ({ issueTerm }) => {
     if (!utterancesEl) return
 
     // 기존 utterances가 있다면 제거
-    const utterancesIframe = utterancesEl.querySelector('.utterances-frame')
-    if (utterancesIframe) {
-      utterancesIframe.remove()
+    while (utterancesEl.firstChild) {
+      utterancesEl.removeChild(utterancesEl.firstChild)
     }
 
     const script = document.createElement("script")
@@ -41,7 +40,9 @@ const Utterances: React.FC<Props> = ({ issueTerm }) => {
 
     return () => {
       if (utterancesEl) {
-        utterancesEl.innerHTML = ""
+        while (utterancesEl.firstChild) {
+          utterancesEl.removeChild(utterancesEl.firstChild)
+        }
       }
     }
   }, [scheme, router, issueTerm])
@@ -56,11 +57,7 @@ const Utterances: React.FC<Props> = ({ issueTerm }) => {
 export default Utterances
 
 const StyledWrapper = styled.div`
-  @media (min-width: 768px) {
-    margin-left: -4rem;
-  }
-
   .utterances-container {
-    min-height: 200px;
+    margin-top: 2rem;
   }
 `

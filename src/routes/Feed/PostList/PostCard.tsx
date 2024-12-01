@@ -58,6 +58,27 @@ const StyledWrapper = styled(Link)`
     padding: 1rem;
     border-radius: 1rem;
     background-color: ${({ theme }) => theme.scheme === "light" ? "white" : theme.colors.gray4};
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      background-color: ${({ theme }) => 
+        theme.scheme === "light" 
+          ? "white" 
+          : theme.colors.gray5};
+
+      h2 {
+        color: ${({ theme }) => theme.colors.gray12};
+      }
+
+      .thumbnail {
+        img {
+          transform: scale(1.05);
+        }
+      }
+    }
 
     .content {
       flex: 1;
@@ -71,6 +92,8 @@ const StyledWrapper = styled(Link)`
         margin-bottom: 0.5rem;
         font-size: 1.125rem;
         font-weight: 500;
+        color: ${({ theme }) => theme.colors.gray11};
+        transition: color 0.3s ease;
       }
 
       .date {
@@ -94,9 +117,11 @@ const StyledWrapper = styled(Link)`
           background-color: ${({ theme }) => theme.colors.gray5};
           color: ${({ theme }) => theme.colors.gray11};
           cursor: pointer;
+          transition: all 0.2s ease;
 
           &:hover {
             background-color: ${({ theme }) => theme.colors.gray6};
+            transform: translateY(-1px);
           }
         }
 
@@ -112,6 +137,10 @@ const StyledWrapper = styled(Link)`
       border-radius: 1rem;
       overflow: hidden;
       flex-shrink: 0;
+
+      img {
+        transition: transform 0.3s ease;
+      }
     }
   }
 `

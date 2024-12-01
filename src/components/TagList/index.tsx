@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from '@emotion/styled'
+import React from "react"
+import styled from "@emotion/styled"
 
 interface Props {
   tags?: string[]
@@ -37,4 +37,4 @@ const StyledWrapper = styled.div`
       color: ${({ theme }) => theme.colors.gray12};
     }
   }
-` 
+`
