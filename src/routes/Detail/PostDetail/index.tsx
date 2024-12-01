@@ -6,26 +6,19 @@ import Category from "src/components/Category"
 import styled from "@emotion/styled"
 import NotionRenderer from "../components/NotionRenderer"
 import usePostQuery from "src/hooks/usePostQuery"
-import { useRouter } from "next/router"
+import TableOfContents from "src/components/TableOfContents"
 
 type Props = {}
 
 const PostDetail: React.FC<Props> = () => {
   const data = usePostQuery()
-  const router = useRouter()
 
   if (!data) return null
 
   const category = (data.category && data.category?.[0]) || undefined
 
-  const handleBackgroundClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      router.back()
-    }
-  }
-
   return (
-    <StyledWrapper onClick={handleBackgroundClick}>
+    <StyledWrapper>
       <article>
         {category && (
           <div css={{ marginBottom: "0.5rem" }}>
@@ -45,6 +38,7 @@ const PostDetail: React.FC<Props> = () => {
           </>
         )}
       </article>
+      <TableOfContents />
     </StyledWrapper>
   )
 }
@@ -60,6 +54,7 @@ const StyledWrapper = styled.div`
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   max-width: 55rem;
   margin: 0 auto;
+  position: relative;
   
   > article {
     margin: 0 auto;
