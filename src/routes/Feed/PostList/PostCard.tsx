@@ -92,13 +92,13 @@ const StyledWrapper = styled(Link)`
         margin-bottom: 0.5rem;
         font-size: 1.125rem;
         font-weight: 500;
-        color: ${({ theme }) => theme.colors.gray11};
+        color: ${({ theme }) => theme.colors.gray12};
         transition: color 0.3s ease;
       }
 
       .date {
         margin-bottom: 0.5rem;
-        color: ${({ theme }) => theme.colors.gray10};
+        color: ${({ theme }) => theme.colors.gray11};
       }
 
       .tags {
@@ -115,7 +115,7 @@ const StyledWrapper = styled(Link)`
           border-radius: 9999px;
           font-size: 0.75rem;
           background-color: ${({ theme }) => theme.colors.gray5};
-          color: ${({ theme }) => theme.colors.gray11};
+          color: ${({ theme }) => theme.colors.gray12};
           cursor: pointer;
           transition: all 0.2s ease;
 
