@@ -6,7 +6,7 @@ const TableOfContentsClient = dynamic(() => import('./TableOfContentsClient'), {
   ssr: false,
 })
 
-const TableOfContents: React.FC = () => {
+const TableOfContents = () => {
   return <TableOfContentsClient />
 }
 

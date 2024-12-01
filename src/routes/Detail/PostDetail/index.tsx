@@ -59,5 +59,10 @@ const StyledWrapper = styled.div`
   > article {
     margin: 0 auto;
     max-width: 42rem;
+    position: relative;
+  }
+
+  @media (max-width: 1200px) {
+    padding: 2rem 1rem;
   }
 `
