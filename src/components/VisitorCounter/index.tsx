@@ -52,7 +52,7 @@ const VisitorCounter: React.FC = () => {
 
 export default VisitorCounter
 
-const StyledWrapper = styled.div\`
+const StyledWrapper = styled.div`
   .counter {
     display: flex;
     align-items: center;
@@ -78,4 +78,4 @@ const StyledWrapper = styled.div\`
   .divider {
     color: ${({ theme }) => theme.colors.gray6};
   }
-\` 
+` 
