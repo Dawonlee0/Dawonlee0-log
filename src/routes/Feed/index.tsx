@@ -30,15 +30,6 @@ const Feed: React.FC<Props> = () => {
 
   return (
     <StyledWrapper>
-      <div className="ocean-banner">
-        <Image
-          src="https://img1.daumcdn.net/thumb/R750x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuQKiJ%2FbtskEUUjJmB%2FoknI8Nm9jFDbnkoPAfGcnK%2Fimg.jpg"
-          alt="Ocean Banner"
-          layout="fill"
-          objectFit="cover"
-          priority
-        />
-      </div>
       <div className="content-wrapper" onClick={handleBackgroundClick}>
         <div
           className="lt"
@@ -85,18 +76,6 @@ const Feed: React.FC<Props> = () => {
 export default Feed
 
 const StyledWrapper = styled.div`
-  .ocean-banner {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    margin-bottom: 2rem;
-    overflow: hidden;
-    
-    @media (max-width: 768px) {
-      height: 100px;
-    }
-  }
-
   .content-wrapper {
     max-width: 1200px;
     margin: 0 auto;
