@@ -12,6 +12,7 @@ import ContactCard from "./ContactCard"
 import PostList from "./PostList"
 import PinnedPosts from "./PostList/PinnedPosts"
 import { useRouter } from "next/router"
+import VisitorCounter from "src/components/VisitorCounter"
 
 const HEADER_HEIGHT = 73
 
@@ -51,6 +52,9 @@ const Feed: React.FC<Props> = () => {
           <MobileProfileCard />
           <PinnedPosts q={q} />
           <SearchInput value={q} onChange={(e) => setQ(e.target.value)} />
+          <div className="mobile-tags">
+            <TagList />
+          </div>
           <FeedHeader />
           <PostList q={q} />
           <div className="footer">
@@ -70,6 +74,9 @@ const Feed: React.FC<Props> = () => {
             <Footer />
           </div>
         </div>
+      </div>
+      <div className="visitor-counter">
+        <VisitorCounter />
       </div>
     </StyledWrapper>
   )
@@ -131,6 +138,15 @@ const StyledWrapper = styled.div`
           display: none;
         }
       }
+
+      .mobile-tags {
+        display: block;
+        margin: 1rem 0;
+
+        @media (min-width: 1024px) {
+          display: none;
+        }
+      }
     }
 
     .rt {
@@ -154,5 +170,12 @@ const StyledWrapper = styled.div`
         padding-top: 1rem;
       }
     }
+  }
+
+  .visitor-counter {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 50;
   }
 `
