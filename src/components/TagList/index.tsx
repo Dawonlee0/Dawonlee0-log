@@ -27,14 +27,31 @@ const StyledWrapper = styled.div`
   gap: 0.5rem;
   margin-top: 1rem;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
   padding-bottom: 0.5rem;
 
-  .tag {
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.gray6};
+    border-radius: 2px;
+  }
+
+  span.tag {
+    display: inline-block;
+    white-space: nowrap;
     font-size: 0.875rem;
     color: ${({ theme }) => theme.colors.gray11};
     transition: color 0.2s;
     cursor: pointer;
-    white-space: nowrap;
+    flex-shrink: 0;
 
     &:hover {
       color: ${({ theme }) => theme.colors.gray12};
