@@ -32,7 +32,7 @@ const Feed: React.FC<Props> = () => {
     <StyledWrapper>
       <div className="ocean-banner">
         <Image
-          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fm=jpg&q=60&w=3000"
+          src="https://img1.daumcdn.net/thumb/R750x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuQKiJ%2FbtskEUUjJmB%2FoknI8Nm9jFDbnkoPAfGcnK%2Fimg.jpg"
           alt="Ocean Banner"
           layout="fill"
           objectFit="cover"
