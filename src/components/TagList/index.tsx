@@ -23,15 +23,18 @@ export default TagList
 
 const StyledWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.5rem;
   margin-top: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
 
   .tag {
     font-size: 0.875rem;
     color: ${({ theme }) => theme.colors.gray11};
     transition: color 0.2s;
     cursor: pointer;
+    white-space: nowrap;
 
     &:hover {
       color: ${({ theme }) => theme.colors.gray12};

@@ -29,6 +29,7 @@ export default Tag
 
 const StyledWrapper = styled.div`
   display: inline-block;
+  white-space: nowrap;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
   font-size: 0.75rem;
