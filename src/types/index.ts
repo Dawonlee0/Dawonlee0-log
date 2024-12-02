@@ -17,7 +17,7 @@ export type TPostType = 'Post' | 'Paper' | 'Page'
 
 export interface TPost {
   id: string
-  date: { start_date: string }
+  date: { start_date: string } | null
   type: TPostType[]
   slug: string
   title?: string
@@ -26,7 +26,7 @@ export interface TPost {
   tags?: string[]
   category?: string
   status?: TPostStatus[]
-  createdTime?: string
+  createdTime: string
   fullWidth?: boolean
   thumbnail?: string
   author?: {
