@@ -5,10 +5,11 @@ export type Language = 'ko' | 'en'
 
 function useLanguage() {
   const [language, setLanguageState] = useState<Language>('ko')
-  const [isClient, setIsClient] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
+  // 컴포넌트가 마운트되었을 때 한 번만 실행
   useEffect(() => {
-    setIsClient(true)
+    setMounted(true)
     try {
       // 저장된 언어 설정 가져오기
       const savedLang = getCookie('preferred-language') as Language
@@ -20,7 +21,10 @@ function useLanguage() {
         const defaultLang = browserLang.startsWith('ko') ? 'ko' : 'en'
         console.log('Setting default language:', defaultLang)
         setLanguageState(defaultLang)
-        setCookie('preferred-language', defaultLang, { path: '/' })
+        setCookie('preferred-language', defaultLang, { 
+          path: '/',
+          maxAge: 365 * 24 * 60 * 60 // 1년
+        })
       } else {
         console.log('Using saved language:', savedLang)
         setLanguageState(savedLang)
@@ -31,8 +35,8 @@ function useLanguage() {
   }, [])
 
   const setLanguage = (lang: Language) => {
-    if (!isClient) {
-      console.log('Not in client, skipping language change')
+    if (!mounted) {
+      console.log('Not mounted yet, skipping language change')
       return
     }
     
@@ -42,7 +46,7 @@ function useLanguage() {
       setCookie('preferred-language', lang, {
         path: '/',
         maxAge: 365 * 24 * 60 * 60, // 1년
-        sameSite: 'strict'
+        sameSite: 'lax'
       })
       console.log('Language set successfully:', lang)
       
@@ -53,19 +57,8 @@ function useLanguage() {
     }
   }
 
-  // 언어 변경 이벤트 리스너
-  useEffect(() => {
-    const handleLanguageChange = () => {
-      const currentLang = getCookie('preferred-language') as Language
-      console.log('Language change detected:', currentLang)
-      setLanguageState(currentLang || 'ko')
-    }
-
-    window.addEventListener('languagechange', handleLanguageChange)
-    return () => window.removeEventListener('languagechange', handleLanguageChange)
-  }, [])
-
-  return { language, setLanguage }
+  // mounted 상태를 반환하여 컴포넌트에서 사용할 수 있게 함
+  return { language, setLanguage, mounted }
 }
 
 export function getPreferredLanguage(): Language {

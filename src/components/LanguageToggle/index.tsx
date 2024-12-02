@@ -4,7 +4,17 @@ import useLanguage from 'src/hooks/useLanguage'
 import dynamic from 'next/dynamic'
 
 const LanguageToggleComponent = () => {
-  const { language, setLanguage } = useLanguage()
+  const { language, setLanguage, mounted } = useLanguage()
+
+  if (!mounted) {
+    return (
+      <StyledWrapper>
+        <button className="placeholder" aria-label="Language Toggle Placeholder">
+          <span className="flag">🌐</span>
+        </button>
+      </StyledWrapper>
+    )
+  }
 
   return (
     <StyledWrapper>
@@ -56,6 +66,9 @@ const StyledWrapper = styled.div`
     border-radius: 50%;
     transition: all 0.2s ease;
     opacity: 0.6;
+    background: none;
+    border: none;
+    cursor: pointer;
     
     &:hover {
       transform: scale(1.1);
