@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import useLanguage from 'src/hooks/useLanguage'
+import dynamic from 'next/dynamic'
 
-const LanguageToggle = () => {
+const LanguageToggleComponent = () => {
   const { language, setLanguage } = useLanguage()
 
   return (
@@ -24,6 +25,17 @@ const LanguageToggle = () => {
     </StyledWrapper>
   )
 }
+
+const LanguageToggle = dynamic(() => Promise.resolve(LanguageToggleComponent), {
+  ssr: false,
+  loading: () => (
+    <StyledWrapper>
+      <button className="placeholder" aria-label="Language Toggle Placeholder">
+        <span className="flag">🌐</span>
+      </button>
+    </StyledWrapper>
+  )
+})
 
 export default LanguageToggle
 
@@ -53,6 +65,11 @@ const StyledWrapper = styled.div`
     &.active {
       opacity: 1;
       transform: scale(1.1);
+    }
+
+    &.placeholder {
+      opacity: 0.4;
+      cursor: wait;
     }
 
     .flag {
