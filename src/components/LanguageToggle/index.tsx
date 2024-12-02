@@ -1,27 +1,25 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import useLanguage from 'src/hooks/useLanguage'
-import { useEffect, useState } from 'react'
+import { useCallback } from 'react'
 
-const LanguageToggle = () => {
+const LanguageToggleComponent: React.FC = () => {
   const { language, setLanguage } = useLanguage()
-  const [isClient, setIsClient] = useState(false)
 
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
+  const handleKoreanClick = useCallback(() => {
+    setLanguage('ko')
+  }, [setLanguage])
 
-  // 서버 사이드에서는 아무것도 렌더링하지 않음
-  if (!isClient) {
-    return null
-  }
+  const handleEnglishClick = useCallback(() => {
+    setLanguage('en')
+  }, [setLanguage])
 
   return (
     <StyledWrapper>
       <button
         type="button"
         className={language === 'ko' ? 'active' : ''}
-        onClick={() => setLanguage('ko')}
+        onClick={handleKoreanClick}
         aria-label="한국어"
       >
         <span className="flag">🇰🇷</span>
@@ -29,7 +27,7 @@ const LanguageToggle = () => {
       <button
         type="button"
         className={language === 'en' ? 'active' : ''}
-        onClick={() => setLanguage('en')}
+        onClick={handleEnglishClick}
         aria-label="English"
       >
         <span className="flag">🇺🇸</span>
@@ -38,43 +36,44 @@ const LanguageToggle = () => {
   )
 }
 
+const LanguageToggle = React.memo(LanguageToggleComponent)
+
 const StyledWrapper = styled.div`
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  z-index: 1000;
+  margin-left: auto;
+  padding-right: 1rem;
 
   button {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
-    padding: 4px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
     border: none;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: none;
     cursor: pointer;
     transition: all 0.2s ease;
+    opacity: 0.6;
+    -webkit-tap-highlight-color: transparent;
     
     &:hover {
       transform: scale(1.1);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      opacity: 0.8;
     }
     
     &.active {
-      background: #fff;
+      opacity: 1;
       transform: scale(1.1);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .flag {
       font-size: 1.2rem;
       line-height: 1;
+      user-select: none;
     }
   }
 `

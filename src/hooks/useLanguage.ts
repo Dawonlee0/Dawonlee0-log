@@ -3,78 +3,82 @@ import { getCookie, setCookie } from 'cookies-next'
 
 export type Language = 'ko' | 'en'
 
-function useLanguage() {
-  const [language, setLanguageState] = useState<Language>('ko')
-  const [mounted, setMounted] = useState(false)
+// 전역 상태 관리를 위한 이벤트 이미터
+const languageChangeEmitter = {
+  listeners: new Set<(lang: Language) => void>(),
+  emit(lang: Language) {
+    this.listeners.forEach(listener => listener(lang))
+  },
+  subscribe(listener: (lang: Language) => void) {
+    this.listeners.add(listener)
+    return () => {
+      this.listeners.delete(listener)
+      return true
+    }
+  }
+}
 
-  // 컴포넌트가 마운트되었을 때 한 번만 실행
-  useEffect(() => {
-    setMounted(true)
+function useLanguage() {
+  const [language, setLanguageState] = useState<Language>(() => {
     try {
-      // 저장된 언어 설정 가져오기
       const savedLang = getCookie('preferred-language') as Language
-      console.log('Initial saved language:', savedLang)
-      
-      if (!savedLang) {
-        // 브라우저의 선호 언어 가져오기
-        const browserLang = window.navigator.language.toLowerCase()
-        const defaultLang = browserLang.startsWith('ko') ? 'ko' : 'en'
-        console.log('Setting default language:', defaultLang)
-        setLanguageState(defaultLang)
-        setCookie('preferred-language', defaultLang, { 
-          path: '/',
-          maxAge: 365 * 24 * 60 * 60 // 1년
-        })
-      } else {
-        console.log('Using saved language:', savedLang)
-        setLanguageState(savedLang)
-      }
-    } catch (error) {
-      console.error('Language detection error:', error)
+      return savedLang || 'ko'
+    } catch {
+      return 'ko'
+    }
+  })
+
+  useEffect(() => {
+    // 언어 변경 구독
+    const unsubscribe = languageChangeEmitter.subscribe((newLang) => {
+      console.log('[useLanguage] Language change subscription triggered:', newLang)
+      setLanguageState(newLang)
+    })
+
+    // cleanup 함수에서 void 반환
+    return () => {
+      unsubscribe()
     }
   }, [])
 
-  const setLanguage = (lang: Language) => {
-    if (!mounted) {
-      console.log('Not mounted yet, skipping language change')
-      return
-    }
-    
-    console.log('Setting language to:', lang)
+  const setLanguage = (newLang: Language) => {
+    console.log('[useLanguage] Changing language to:', newLang)
     try {
-      setLanguageState(lang)
-      setCookie('preferred-language', lang, {
+      // 쿠키 설정
+      setCookie('preferred-language', newLang, {
         path: '/',
         maxAge: 365 * 24 * 60 * 60, // 1년
         sameSite: 'lax'
       })
-      console.log('Language set successfully:', lang)
+
+      // 전역 상태 업데이트
+      languageChangeEmitter.emit(newLang)
+      
+      // 상태 업데이트
+      setLanguageState(newLang)
+      
+      console.log('[useLanguage] Language changed successfully to:', newLang)
       
       // 페이지 새로고침 없이 상태 업데이트를 위해 이벤트 발생
-      window.dispatchEvent(new Event('languagechange'))
+      window.dispatchEvent(new CustomEvent('languageChange', { 
+        detail: { language: newLang } 
+      }))
     } catch (error) {
-      console.error('Error setting language:', error)
+      console.error('[useLanguage] Error changing language:', error)
     }
   }
 
-  // mounted 상태를 반환하여 컴포넌트에서 사용할 수 있게 함
-  return { language, setLanguage, mounted }
+  return { language, setLanguage }
 }
 
 export function getPreferredLanguage(): Language {
   try {
     if (typeof window === 'undefined') return 'ko'
     const savedLang = getCookie('preferred-language')
-    console.log('Getting preferred language:', savedLang)
-    if (!savedLang) {
-      const browserLang = window.navigator.language.toLowerCase()
-      const defaultLang = browserLang.startsWith('ko') ? 'ko' : 'en'
-      console.log('No saved language, using browser language:', defaultLang)
-      return defaultLang
-    }
+    console.log('[useLanguage] Getting preferred language:', savedLang)
     return (savedLang as Language) || 'ko'
   } catch (error) {
-    console.error('Language detection error:', error)
+    console.error('[useLanguage] Error getting preferred language:', error)
     return 'ko'
   }
 }
