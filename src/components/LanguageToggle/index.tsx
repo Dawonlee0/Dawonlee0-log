@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import useLanguage from 'src/hooks/useLanguage'
-import dynamic from 'next/dynamic'
 
 const LanguageToggle = () => {
   const { language, setLanguage } = useLanguage()
@@ -26,9 +25,7 @@ const LanguageToggle = () => {
   )
 }
 
-export default dynamic(() => Promise.resolve(LanguageToggle), {
-  ssr: false
-})
+export default LanguageToggle
 
 const StyledWrapper = styled.div`
   display: flex;
