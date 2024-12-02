@@ -6,12 +6,40 @@ import Category from "../../../components/Category"
 import { TPost } from "../../../types"
 import Image from "next/image"
 import styled from "@emotion/styled"
+import { useEffect, useState } from "react"
+import { translatePost } from "src/libs/utils/translate"
+import useLanguage from "src/hooks/useLanguage"
 
 type Props = {
   data: TPost
 }
 
-const PostCard: React.FC<Props> = ({ data }) => {
+const PostCard: React.FC<Props> = ({ data: originalData }) => {
+  const [data, setData] = useState<TPost>(originalData)
+  const { language } = useLanguage()
+
+  useEffect(() => {
+    const translateContent = async () => {
+      console.log('PostCard - Language changed to:', language)
+      
+      if (language === 'ko') {
+        console.log('PostCard - Setting Korean content')
+        setData(JSON.parse(JSON.stringify(originalData)))
+        return
+      }
+
+      try {
+        const translated = await translatePost(originalData, language)
+        setData(translated)
+      } catch (error) {
+        console.error('PostCard - Translation error:', error)
+        setData(JSON.parse(JSON.stringify(originalData)))
+      }
+    }
+
+    translateContent()
+  }, [originalData, language])
+
   return (
     <StyledWrapper href={`/${data.slug}`}>
       <article>
@@ -37,7 +65,7 @@ const PostCard: React.FC<Props> = ({ data }) => {
               src={data.thumbnail}
               width={160}
               height={90}
-              alt={data.title}
+              alt={data.title || ''}
               objectFit="cover"
             />
           </div>
