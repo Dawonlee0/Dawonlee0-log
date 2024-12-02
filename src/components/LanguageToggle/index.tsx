@@ -1,25 +1,31 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import useLanguage from 'src/hooks/useLanguage'
-import { useCallback } from 'react'
+import { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
 
-const LanguageToggleComponent: React.FC = () => {
+const LanguageToggleComponent = () => {
   const { language, setLanguage } = useLanguage()
+  const [mounted, setMounted] = useState(false)
 
-  const handleKoreanClick = useCallback(() => {
-    setLanguage('ko')
-  }, [setLanguage])
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
-  const handleEnglishClick = useCallback(() => {
-    setLanguage('en')
-  }, [setLanguage])
+  if (!mounted) {
+    return (
+      <StyledWrapper aria-hidden="true">
+        <div className="placeholder" />
+      </StyledWrapper>
+    )
+  }
 
   return (
     <StyledWrapper>
       <button
         type="button"
         className={language === 'ko' ? 'active' : ''}
-        onClick={handleKoreanClick}
+        onClick={() => setLanguage('ko')}
         aria-label="한국어"
       >
         <span className="flag">🇰🇷</span>
@@ -27,7 +33,7 @@ const LanguageToggleComponent: React.FC = () => {
       <button
         type="button"
         className={language === 'en' ? 'active' : ''}
-        onClick={handleEnglishClick}
+        onClick={() => setLanguage('en')}
         aria-label="English"
       >
         <span className="flag">🇺🇸</span>
@@ -36,14 +42,21 @@ const LanguageToggleComponent: React.FC = () => {
   )
 }
 
-const LanguageToggle = React.memo(LanguageToggleComponent)
-
 const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
   margin-left: auto;
   padding-right: 1rem;
+  min-width: 76px;
+  height: 28px;
+  justify-content: flex-end;
+
+  .placeholder {
+    width: 76px;
+    height: 28px;
+    opacity: 0;
+  }
 
   button {
     display: flex;
@@ -78,4 +91,12 @@ const StyledWrapper = styled.div`
   }
 `
 
-export default LanguageToggle 
+// dynamic import를 사용하여 클라이언트 사이드에서만 렌더링
+export default dynamic(() => Promise.resolve(LanguageToggleComponent), {
+  ssr: false,
+  loading: () => (
+    <StyledWrapper aria-hidden="true">
+      <div className="placeholder" />
+    </StyledWrapper>
+  ),
+}) 
