@@ -20,7 +20,7 @@ export interface TPost {
   date: { start_date: string } | null
   type: TPostType[]
   slug: string
-  title?: string
+  title: string
   description?: string
   summary?: string
   tags?: string[]
