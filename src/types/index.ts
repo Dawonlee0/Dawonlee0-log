@@ -17,7 +17,7 @@ export type TPostType = 'Post' | 'Paper' | 'Page'
 
 export interface TPost {
   id: string
-  date: { start_date: string } | null
+  date: { start_date: string }
   type: TPostType[]
   slug: string
   title: string
