@@ -25,7 +25,7 @@ export interface TPost {
   summary?: string
   tags?: string[]
   category?: string
-  status?: TPostStatus[]
+  status: TPostStatus[]
   createdTime: string
   fullWidth?: boolean
   thumbnail?: string
