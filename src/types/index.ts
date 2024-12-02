@@ -34,7 +34,7 @@ export interface TPost {
     name: string
     profile_photo?: string
   }[]
-  recordMap?: ExtendedRecordMap
+  recordMap: ExtendedRecordMap
 }
 
 export type TPosts = TPost[]
