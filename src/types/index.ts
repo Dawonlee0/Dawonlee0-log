@@ -37,6 +37,9 @@ export interface TPost {
   recordMap: ExtendedRecordMap
 }
 
+// 이전 코드와의 호환성을 위해 PostDetail 타입을 TPost와 동일하게 설정
+export type PostDetail = TPost
+
 export type TPosts = TPost[]
 
 export type TTags = {
