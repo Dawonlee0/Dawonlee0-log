@@ -1,24 +1,25 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import useLanguage from 'src/hooks/useLanguage'
-import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
 
-const LanguageToggleComponent = () => {
-  const { language, setLanguage, mounted } = useLanguage()
+const LanguageToggle = () => {
+  const { language, setLanguage } = useLanguage()
+  const [isClient, setIsClient] = useState(false)
 
-  if (!mounted) {
-    return (
-      <StyledWrapper>
-        <button className="placeholder" aria-label="Language Toggle Placeholder">
-          <span className="flag">🌐</span>
-        </button>
-      </StyledWrapper>
-    )
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  // 서버 사이드에서는 아무것도 렌더링하지 않음
+  if (!isClient) {
+    return null
   }
 
   return (
     <StyledWrapper>
       <button
+        type="button"
         className={language === 'ko' ? 'active' : ''}
         onClick={() => setLanguage('ko')}
         aria-label="한국어"
@@ -26,6 +27,7 @@ const LanguageToggleComponent = () => {
         <span className="flag">🇰🇷</span>
       </button>
       <button
+        type="button"
         className={language === 'en' ? 'active' : ''}
         onClick={() => setLanguage('en')}
         aria-label="English"
@@ -36,53 +38,38 @@ const LanguageToggleComponent = () => {
   )
 }
 
-const LanguageToggle = dynamic(() => Promise.resolve(LanguageToggleComponent), {
-  ssr: false,
-  loading: () => (
-    <StyledWrapper>
-      <button className="placeholder" aria-label="Language Toggle Placeholder">
-        <span className="flag">🌐</span>
-      </button>
-    </StyledWrapper>
-  )
-})
-
-export default LanguageToggle
-
 const StyledWrapper = styled.div`
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-left: auto;
-  padding-right: 1rem;
+  z-index: 1000;
 
   button {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    padding: 0;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-    opacity: 0.6;
-    background: none;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
     border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    transition: all 0.2s ease;
     
     &:hover {
       transform: scale(1.1);
-      opacity: 0.8;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
     
     &.active {
-      opacity: 1;
+      background: #fff;
       transform: scale(1.1);
-    }
-
-    &.placeholder {
-      opacity: 0.4;
-      cursor: wait;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .flag {
@@ -90,4 +77,6 @@ const StyledWrapper = styled.div`
       line-height: 1;
     }
   }
-` 
+`
+
+export default LanguageToggle 
