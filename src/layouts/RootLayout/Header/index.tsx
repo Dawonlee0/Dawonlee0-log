@@ -3,7 +3,6 @@ import Logo from "./Logo"
 import ThemeToggle from "./ThemeToggle"
 import styled from "@emotion/styled"
 import { zIndexes } from "src/styles/zIndexes"
-import LanguageToggle from "src/components/LanguageToggle"
 
 type Props = {
   fullWidth: boolean
@@ -15,7 +14,6 @@ const Header: React.FC<Props> = ({ fullWidth }) => {
       <div data-full-width={fullWidth} className="container">
         <Logo />
         <div className="nav">
-          <LanguageToggle />
           <ThemeToggle />
           <NavBar />
         </div>

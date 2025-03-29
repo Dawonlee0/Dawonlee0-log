@@ -11,8 +11,8 @@ const useScheme = (): [SchemeType, SetScheme] => {
   const queryClient = useQueryClient()
   const followsSystemTheme = CONFIG.blog.scheme === "system"
 
-  const { data } = useQuery<SchemeType>({
-    queryKey: [queryKey.SCHEME],
+  const { data } = useQuery({
+    queryKey: queryKey.scheme(),
     enabled: false,
     initialData: followsSystemTheme
       ? "dark"
@@ -21,7 +21,8 @@ const useScheme = (): [SchemeType, SetScheme] => {
 
   const setScheme = (scheme: SchemeType) => {
     setCookie("scheme", scheme)
-    queryClient.setQueryData([queryKey.SCHEME], scheme)
+
+    queryClient.setQueryData(queryKey.scheme(), scheme)
   }
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const useScheme = (): [SchemeType, SetScheme] => {
         : "light"
       : data
     setScheme(cachedScheme || defaultScheme)
-  }, [data, followsSystemTheme])
+  }, [])
 
   return [data, setScheme]
 }

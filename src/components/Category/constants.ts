@@ -16,14 +16,3 @@ export const COLOR_SET: Record<string, string> = {
   E: "rgb(199 210 254)",
   F: "rgb(209 250 229)",
 }
-
-export const CATEGORY_COLOR_MAP: Record<string, string> = {
-  "All Posts": COLOR_SET["0"],
-  "🔄 DevOps": COLOR_SET["1"],
-  "Backend": COLOR_SET["2"],
-  "🤖 Computer Science": COLOR_SET["3"],
-  "📚 Lecture": COLOR_SET["4"],
-  "💻 Frontend": COLOR_SET["5"],
-  "📗 Docs": COLOR_SET["6"],
-  "😎 Daily": COLOR_SET["7"],
-}

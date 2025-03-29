@@ -3,7 +3,6 @@ import PostDetail from "./PostDetail"
 import PageDetail from "./PageDetail"
 import styled from "@emotion/styled"
 import usePostQuery from "src/hooks/usePostQuery"
-import TableOfContents from "./components/TableOfContents"
 
 type Props = {}
 
@@ -14,10 +13,8 @@ const Detail: React.FC<Props> = () => {
   if (!data) return null
   return (
     <StyledWrapper data-type={data.type}>
-      <div>
-        {data.type[0] === "Page" && <PageDetail />}
-        {data.type[0] !== "Page" && <PostDetail />}
-      </div>
+      {data.type[0] === "Page" && <PageDetail />}
+      {data.type[0] !== "Page" && <PostDetail />}
     </StyledWrapper>
   )
 }
@@ -25,38 +22,12 @@ const Detail: React.FC<Props> = () => {
 export default Detail
 
 const StyledWrapper = styled.div`
-  min-height: 100vh;
   padding: 2rem 0;
-  background-color: ${({ theme }) => theme.colors.gray2};
 
-  .inner {
-    position: relative;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    display: flex;
-    gap: 2rem;
+  &[data-type="Paper"] {
+    padding: 40px 0;
   }
-
-  .container {
-    flex: 1;
-    max-width: 60rem;
-  }
-
-  .content {
-    position: relative;
-    width: 100%;
-    background-color: ${({ theme }) => 
-      theme.scheme === "light" ? "white" : theme.colors.gray4};
-    border-radius: 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    
-    &[data-type="Paper"] {
-      padding: 40px 0;
-    }
-  }
-
+  /** Reference: https://github.com/chriskempson/tomorrow-theme **/
   code[class*="language-mermaid"],
   pre[class*="language-mermaid"] {
     background-color: ${({ theme }) => theme.colors.gray5};

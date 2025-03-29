@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react"
 import PostCard from "src/routes/Feed/PostList/PostCard"
 import { DEFAULT_CATEGORY } from "src/constants"
 import usePostsQuery from "src/hooks/usePostsQuery"
-import { filterPosts } from "./filterPosts"
-import { TPost } from "src/types"
 
 type Props = {
   q: string
@@ -13,42 +11,54 @@ type Props = {
 const PostList: React.FC<Props> = ({ q }) => {
   const router = useRouter()
   const data = usePostsQuery()
-  const [filteredPosts, setFilteredPosts] = useState<TPost[]>([])
+  const [filteredPosts, setFilteredPosts] = useState(data)
 
   const currentTag = `${router.query.tag || ``}` || undefined
   const currentCategory = `${router.query.category || ``}` || DEFAULT_CATEGORY
   const currentOrder = `${router.query.order || ``}` || "desc"
 
   useEffect(() => {
-    if (!data) return
+    setFilteredPosts(() => {
+      let newFilteredPosts = data
+      // keyword
+      newFilteredPosts = newFilteredPosts.filter((post) => {
+        const tagContent = post.tags ? post.tags.join(" ") : ""
+        const searchContent = post.title + post.summary + tagContent
+        return searchContent.toLowerCase().includes(q.toLowerCase())
+      })
 
-    console.log("Original Posts:", data)
-    
-    const filtered = filterPosts({
-      posts: data,
-      q,
-      tag: currentTag,
-      category: currentCategory,
-      order: currentOrder
+      // tag
+      if (currentTag) {
+        newFilteredPosts = newFilteredPosts.filter(
+          (post) => post && post.tags && post.tags.includes(currentTag)
+        )
+      }
+
+      // category
+      if (currentCategory !== DEFAULT_CATEGORY) {
+        newFilteredPosts = newFilteredPosts.filter(
+          (post) =>
+            post && post.category && post.category.includes(currentCategory)
+        )
+      }
+      // order
+      if (currentOrder !== "desc") {
+        newFilteredPosts = newFilteredPosts.reverse()
+      }
+
+      return newFilteredPosts
     })
-
-    console.log("Filtered Posts:", filtered)
-    
-    setFilteredPosts(filtered)
-  }, [data, q, currentTag, currentCategory, currentOrder])
+  }, [q, currentTag, currentCategory, currentOrder, setFilteredPosts])
 
   return (
     <>
       <div className="my-2">
-        {filteredPosts.map((post) => {
-          console.log("Post being rendered:", post)
-          return (
-            <PostCard 
-              key={post.id} 
-              data={post}
-            />
-          )
-        })}
+        {!filteredPosts.length && (
+          <p className="text-gray-500 dark:text-gray-300">Nothing! 😺</p>
+        )}
+        {filteredPosts.map((post) => (
+          <PostCard key={post.id} data={post} />
+        ))}
       </div>
     </>
   )

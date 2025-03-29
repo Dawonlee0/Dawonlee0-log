@@ -2,74 +2,58 @@ import Link from "next/link"
 import { CONFIG } from "site.config"
 import { formatDate } from "src/libs/utils"
 import Tag from "../../../components/Tag"
-import Category from "../../../components/Category"
 import { TPost } from "../../../types"
 import Image from "next/image"
+import Category from "../../../components/Category"
 import styled from "@emotion/styled"
-import { useEffect, useState } from "react"
-import { translatePost } from "src/libs/utils/translate"
-import useLanguage from "src/hooks/useLanguage"
 
 type Props = {
   data: TPost
 }
 
-const PostCard: React.FC<Props> = ({ data: originalData }) => {
-  const [data, setData] = useState<TPost>(originalData)
-  const { language } = useLanguage()
-
-  useEffect(() => {
-    const translateContent = async () => {
-      console.log('PostCard - Language changed to:', language)
-      
-      if (language === 'ko') {
-        console.log('PostCard - Setting Korean content')
-        setData(JSON.parse(JSON.stringify(originalData)))
-        return
-      }
-
-      try {
-        const translated = await translatePost(originalData, language)
-        setData(translated)
-      } catch (error) {
-        console.error('PostCard - Translation error:', error)
-        setData(JSON.parse(JSON.stringify(originalData)))
-      }
-    }
-
-    translateContent()
-  }, [originalData, language])
+const PostCard: React.FC<Props> = ({ data }) => {
+  const category = (data.category && data.category?.[0]) || undefined
 
   return (
     <StyledWrapper href={`/${data.slug}`}>
       <article>
-        <div className="content">
-          {data.category && (
-            <div className="category">
-              <Category>{data.category}</Category>
-            </div>
-          )}
-          <h2>{data.title}</h2>
-          <div className="date">
-            {formatDate(data?.date?.start_date || data.createdTime, CONFIG.lang)}
+        {category && (
+          <div className="category">
+            <Category>{category}</Category>
           </div>
-          <div className="tags">
-            {data.tags?.map((tag: string) => (
-              <div key={tag}>{tag}</div>
-            ))}
-          </div>
-        </div>
+        )}
         {data.thumbnail && (
           <div className="thumbnail">
             <Image
               src={data.thumbnail}
-              width={160}
-              height={90}
-              alt={data.title || ''}
-              objectFit="cover"
+              fill
+              alt={data.title}
+              css={{ objectFit: "cover" }}
             />
           </div>
         )}
+        <div data-thumb={!!data.thumbnail} data-category={!!category} className="content">
+          <header className="top">
+            <h2>{data.title}</h2>
+          </header>
+          <div className="date">
+            <div className="content">
+              {formatDate(
+                data?.date?.start_date || data.createdTime,
+                CONFIG.lang
+              )}
+            </div>
+          </div>
+          <div className="summary">
+            <p>{data.summary}</p>
+          </div>
+          <div className="tags">
+            {data.tags &&
+              data.tags.map((tag: string, idx: number) => (
+                <Tag key={idx}>{tag}</Tag>
+              ))}
+          </div>
+        </div>
       </article>
     </StyledWrapper>
   )
@@ -79,95 +63,102 @@ export default PostCard
 
 const StyledWrapper = styled(Link)`
   article {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    overflow: hidden;
+    position: relative;
     margin-bottom: 1.5rem;
-    padding: 1rem;
     border-radius: 1rem;
-    background-color: ${({ theme }) => theme.scheme === "light" ? "white" : theme.colors.gray4};
-    transition: all 0.3s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    background-color: ${({ theme }) =>
+      theme.scheme === "light" ? "white" : theme.colors.gray4};
+    transition-property: box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
 
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      background-color: ${({ theme }) => 
-        theme.scheme === "light" 
-          ? "white" 
-          : theme.colors.gray5};
-
-      h2 {
-        color: ${({ theme }) => theme.colors.gray12};
-      }
-
-      .thumbnail {
-        img {
-          transform: scale(1.05);
-        }
-      }
+    @media (min-width: 768px) {
+      margin-bottom: 2rem;
     }
 
-    .content {
-      flex: 1;
-      margin-right: 1rem;
+    :hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    > .category {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      z-index: 10;
+    }
 
-      .category {
-        margin-bottom: 0.5rem;
+    > .thumbnail {
+      position: relative;
+      width: 100%;
+      background-color: ${({ theme }) => theme.colors.gray2};
+      padding-bottom: 66%;
+
+      @media (min-width: 1024px) {
+        padding-bottom: 50%;
       }
+    }
+    > .content {
+      padding: 1rem;
 
-      h2 {
-        margin-bottom: 0.5rem;
-        font-size: 1.125rem;
-        font-weight: 500;
-        color: ${({ theme }) => theme.colors.gray12};
-        transition: color 0.3s ease;
+      &[data-thumb="false"] {
+        padding-top: 3.5rem;
       }
-
-      .date {
-        margin-bottom: 0.5rem;
-        color: ${({ theme }) => theme.colors.gray11};
+      &[data-category="false"] {
+        padding-top: 1.5rem;
       }
-
-      .tags {
+      > .top {
         display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        min-height: 24px;
-        margin-top: 0.5rem;
-        
-        > div {
-          display: inline-flex;
-          align-items: center;
-          padding: 0.25rem 0.75rem;
-          border-radius: 9999px;
-          font-size: 0.75rem;
-          background-color: ${({ theme }) => theme.colors.gray5};
-          color: ${({ theme }) => theme.colors.gray12};
-          cursor: pointer;
-          transition: all 0.2s ease;
+        flex-direction: column;
+        justify-content: space-between;
 
-          &:hover {
-            background-color: ${({ theme }) => theme.colors.gray6};
-            transform: translateY(-1px);
+        @media (min-width: 768px) {
+          flex-direction: row;
+          align-items: baseline;
+        }
+        h2 {
+          margin-bottom: 0.5rem;
+          font-size: 1.125rem;
+          line-height: 1.75rem;
+          font-weight: 500;
+
+          cursor: pointer;
+
+          @media (min-width: 768px) {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
           }
         }
-
-        @media (min-width: 1024px) {
-          display: flex;
+      }
+      > .date {
+        display: flex;
+        margin-bottom: 1rem;
+        gap: 0.5rem;
+        align-items: center;
+        .content {
+          font-size: 0.875rem;
+          line-height: 1.25rem;
+          color: ${({ theme }) => theme.colors.gray10};
+          @media (min-width: 768px) {
+            margin-left: 0;
+          }
         }
       }
-    }
+      > .summary {
+        margin-bottom: 1rem;
+        p {
+          display: none;
+          line-height: 2rem;
+          color: ${({ theme }) => theme.colors.gray11};
 
-    .thumbnail {
-      width: 160px;
-      height: 90px;
-      border-radius: 1rem;
-      overflow: hidden;
-      flex-shrink: 0;
-
-      img {
-        transition: transform 0.3s ease;
+          @media (min-width: 768px) {
+            display: block;
+          }
+        }
+      }
+      > .tags {
+        display: flex;
+        gap: 0.5rem;
       }
     }
   }

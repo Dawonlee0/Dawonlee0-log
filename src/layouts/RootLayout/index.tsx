@@ -3,8 +3,6 @@ import { ThemeProvider } from "./ThemeProvider"
 import useScheme from "src/hooks/useScheme"
 import Header from "./Header"
 import styled from "@emotion/styled"
-import { Global, useTheme } from '@emotion/react'
-import { scrollbarStyle } from 'src/styles'
 import Scripts from "src/layouts/RootLayout/Scripts"
 import useGtagEffect from "./useGtagEffect"
 import Prism from "prismjs/prism"
@@ -42,11 +40,6 @@ import 'prismjs/components/prism-wasm.js'
 import 'prismjs/components/prism-yaml.js'
 import "prismjs/components/prism-go.js"
 
-const GlobalStyles = () => {
-  const theme = useTheme()
-  return <Global styles={scrollbarStyle(theme)} />
-}
-
 type Props = {
   children: ReactNode
 }
@@ -60,8 +53,9 @@ const RootLayout = ({ children }: Props) => {
 
   return (
     <ThemeProvider scheme={scheme}>
-      <GlobalStyles />
       <Scripts />
+      {/* // TODO: replace react query */}
+      {/* {metaConfig.type !== "Paper" && <Header />} */}
       <Header fullWidth={false} />
       <StyledMain>{children}</StyledMain>
     </ThemeProvider>

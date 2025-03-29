@@ -12,33 +12,32 @@ export type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-export type TPostStatus = 'Public' | 'Private' | 'PublicOnDetail'
-export type TPostType = 'Post' | 'Paper' | 'Page'
+export type TPostStatus = "Private" | "Public" | "PublicOnDetail"
+export type TPostType = "Post" | "Paper" | "Page"
 
-export interface TPost {
+export type TPost = {
   id: string
   date: { start_date: string }
   type: TPostType[]
   slug: string
-  title: string
-  description?: string
-  summary?: string
   tags?: string[]
-  category?: string
-  status: TPostStatus[]
-  createdTime: string
-  fullWidth?: boolean
-  thumbnail?: string
+  category?: string[]
+  summary?: string
   author?: {
     id: string
     name: string
     profile_photo?: string
   }[]
-  recordMap: ExtendedRecordMap
+  title: string
+  status: TPostStatus[]
+  createdTime: string
+  fullWidth: boolean
+  thumbnail?: string
 }
 
-// 이전 코드와의 호환성을 위해 PostDetail 타입을 TPost와 동일하게 설정
-export type PostDetail = TPost
+export type PostDetail = TPost & {
+  recordMap: ExtendedRecordMap
+}
 
 export type TPosts = TPost[]
 

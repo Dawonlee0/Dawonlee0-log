@@ -3,9 +3,10 @@ import { queryKey } from "src/constants/queryKey"
 import { TPost } from "src/types"
 
 const usePostsQuery = () => {
-  const { data } = useQuery<TPost[]>({
-    queryKey: [queryKey.POSTS],
-    initialData: [],
+  const { data } = useQuery({
+    queryKey: queryKey.posts(),
+    initialData: [] as TPost[],
+    enabled: true,
   })
 
   if (!data) throw new Error("Posts data is not found")

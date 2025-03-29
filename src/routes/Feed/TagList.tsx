@@ -38,9 +38,7 @@ const TagList: React.FC<Props> = () => {
         <Emoji>🏷️</Emoji> Tags
       </div>
       <div className="list">
-        {Object.keys(data)
-          .sort((a, b) => a.localeCompare(b))
-          .map((key) => (
+        {Object.keys(data).map((key) => (
           <a
             key={key}
             data-active={key === currentTag}
@@ -72,7 +70,6 @@ const StyledWrapper = styled.div`
     margin-bottom: 1.5rem;
     gap: 0.25rem;
     overflow: scroll;
-    flex-wrap: wrap;
 
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -82,15 +79,16 @@ const StyledWrapper = styled.div`
     }
 
     @media (min-width: 1024px) {
-      display: flex;
-      flex-direction: column;
+      display: block;
     }
 
     a {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.25rem 1rem;
-      margin: 0.25rem 0;
+      display: block;
+      padding: 0.25rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
       border-radius: 0.75rem;
       font-size: 0.875rem;
       line-height: 1.25rem;
@@ -104,6 +102,10 @@ const StyledWrapper = styled.div`
       &[data-active="true"] {
         color: ${({ theme }) => theme.colors.gray12};
         background-color: ${({ theme }) => theme.colors.gray4};
+
+        :hover {
+          background-color: ${({ theme }) => theme.colors.gray4};
+        }
       }
     }
   }
