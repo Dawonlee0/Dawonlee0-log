@@ -11,6 +11,10 @@ const TagList: React.FC<Props> = () => {
   const currentTag = router.query.tag || undefined
   const data = useTagsQuery()
 
+  const sortedTags = Object.keys(data).sort((a, b) =>
+    a.localeCompare(b, "ko-KR")
+  )
+
   const handleClickTag = (value: any) => {
     // delete
     if (currentTag === value) {
@@ -38,7 +42,7 @@ const TagList: React.FC<Props> = () => {
         <Emoji>🏷️</Emoji> Tags
       </div>
       <div className="list">
-        {Object.keys(data).map((key) => (
+        {sortedTags.map((key) => (
           <a
             key={key}
             data-active={key === currentTag}
