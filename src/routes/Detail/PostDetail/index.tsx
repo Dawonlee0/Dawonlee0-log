@@ -48,7 +48,7 @@ const PostDetail: React.FC<Props> = () => {
 
   if (!data) return null
 
-  const category = (data.category && data.category?.[0]) || undefined
+  const category = data.category?.[0]
 
   return (
     <StyledWrapper>
@@ -56,7 +56,7 @@ const PostDetail: React.FC<Props> = () => {
         {category && (
           <div css={{ marginBottom: "0.5rem" }}>
             <Category readOnly={data.status?.[0] === "PublicOnDetail"}>
-              {category.name}
+              {category}
             </Category>
           </div>
         )}
