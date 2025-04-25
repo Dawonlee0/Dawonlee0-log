@@ -94,6 +94,7 @@ const PostDetail: React.FC<Props> = () => {
 export default PostDetail
 
 const StyledWrapper = styled.div`
+  position: relative;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 3rem;
@@ -105,7 +106,6 @@ const StyledWrapper = styled.div`
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   margin: 0 auto;
-  position: relative;
   
   > article {
     margin: 0 auto;
@@ -114,55 +114,39 @@ const StyledWrapper = styled.div`
 `
 
 const TableOfContents = styled.aside`
-  position: fixed;
-  top: 50%;
-  right: 2rem;
-  transform: translateY(-50%);
-  max-height: 80vh;
-  overflow-y: auto;
-  z-index: 10;
-  min-width: 240px;
-  padding: 0.5rem 1rem;
+  display: none;
   
-  /* 스크롤바 스타일링 */
-  ::-webkit-scrollbar {
-    width: 6px;
+  @media (min-width: 1440px) {
+    display: block;
+    position: fixed;
+    top: 7rem;
+    right: calc((100vw - 56rem) / 2 - 16rem);
+    width: 14rem;
+    height: auto;
+    z-index: 10;
   }
-  
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.gray8};
-    border-radius: 3px;
-  }
-  
+
   .toc-header {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
     color: ${({ theme }) => theme.colors.gray12};
-    padding-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
     border-bottom: 1px solid ${({ theme }) => theme.colors.gray8};
     letter-spacing: -0.02em;
-  }
-  
-  @media (max-width: 1280px) {
-    display: none;
   }
 
   nav {
     display: flex;
     flex-direction: column;
-    gap: 0.875rem;
+    gap: 0.75rem;
   }
 
   .toc-item {
     text-decoration: none;
     color: ${({ theme }) => theme.colors.gray11};
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 0.875rem;
+    line-height: 1.4;
     transition: all 0.2s;
     opacity: 0.85;
     background: none;
@@ -172,6 +156,8 @@ const TableOfContents = styled.aside`
     cursor: pointer;
     position: relative;
     letter-spacing: -0.01em;
+    word-break: keep-all;
+    overflow-wrap: break-word;
 
     &:hover {
       opacity: 1;
@@ -180,37 +166,37 @@ const TableOfContents = styled.aside`
 
     &.level-2 {
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
     }
 
     &.level-3 {
-      padding-left: 1.125rem;
-      font-size: 0.9rem;
+      padding-left: 1rem;
+      font-size: 0.8125rem;
       font-weight: 400;
-      margin-bottom: 0.375rem;
+      margin-bottom: 0.125rem;
       
       &::before {
         content: "";
         position: absolute;
         left: 0;
-        top: 50%;
-        width: 6px;
+        top: 0.7em;
+        width: 5px;
         height: 1px;
         background-color: ${({ theme }) => theme.colors.gray9};
       }
     }
 
     &.level-4 {
-      padding-left: 2.25rem;
-      font-size: 0.85rem;
+      padding-left: 1.75rem;
+      font-size: 0.8125rem;
       font-weight: 400;
       color: ${({ theme }) => theme.colors.gray10};
       
       &::before {
         content: "";
         position: absolute;
-        left: 1.125rem;
-        top: 50%;
+        left: 1rem;
+        top: 0.7em;
         width: 4px;
         height: 1px;
         background-color: ${({ theme }) => theme.colors.gray8};
