@@ -17,7 +17,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       dehydratedState: dehydrate(queryClient),
     },
-    revalidate: CONFIG.revalidateTime,
+    revalidate: 1,  // 1초마다 재검증하도록 수정
   }
 }
 

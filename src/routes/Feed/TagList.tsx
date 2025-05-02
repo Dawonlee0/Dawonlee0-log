@@ -11,12 +11,15 @@ const TagList: React.FC<Props> = () => {
   const currentTag = router.query.tag || undefined
   const data = useTagsQuery()
 
-  const sortedTags = Object.keys(data).sort((a, b) =>
-    a.localeCompare(b, "ko-KR")
-  )
+  // 데이터가 없는 경우 빈 배열 반환
+  const sortedTags = React.useMemo(() => {
+    if (!data || typeof data !== 'object') return []
+    return Object.entries(data)
+      .filter(([tag]) => tag && tag.trim().length > 0)
+      .sort((a, b) => a[0].localeCompare(b[0])) // 알파벳/가나다 순 정렬
+  }, [data])
 
-  const handleClickTag = (value: any) => {
-    // delete
+  const handleClickTag = (value: string) => {
     if (currentTag === value) {
       router.push({
         query: {
@@ -24,9 +27,7 @@ const TagList: React.FC<Props> = () => {
           tag: undefined,
         },
       })
-    }
-    // add
-    else {
+    } else {
       router.push({
         query: {
           ...router.query,
@@ -36,19 +37,22 @@ const TagList: React.FC<Props> = () => {
     }
   }
 
+  if (sortedTags.length === 0) return null
+
   return (
     <StyledWrapper>
       <div className="top">
         <Emoji>🏷️</Emoji> Tags
       </div>
       <div className="list">
-        {sortedTags.map((key) => (
+        {sortedTags.map(([tag, count]) => (
           <a
-            key={key}
-            data-active={key === currentTag}
-            onClick={() => handleClickTag(key)}
+            key={tag}
+            data-active={tag === currentTag}
+            onClick={() => handleClickTag(tag)}
+            title={`${tag}`}
           >
-            {key}
+            {tag}
           </a>
         ))}
       </div>
@@ -87,7 +91,9 @@ const StyledWrapper = styled.div`
     }
 
     a {
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       padding: 0.25rem;
       padding-left: 1rem;
       padding-right: 1rem;

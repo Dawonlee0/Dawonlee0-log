@@ -13,6 +13,8 @@ type Props = {
 
 const PostCard: React.FC<Props> = ({ data }) => {
   const category = (data.category && data.category?.[0]) || undefined
+  // 태그가 실제로 존재하고 유효한 경우만 필터링
+  const validTags = data.tags?.filter(tag => tag && tag.trim().length > 0) || []
 
   return (
     <StyledWrapper href={`/${data.slug}`}>
@@ -48,9 +50,9 @@ const PostCard: React.FC<Props> = ({ data }) => {
             <p>{data.summary}</p>
           </div>
           <div className="tags">
-            {data.tags &&
-              data.tags.map((tag: string, idx: number) => (
-                <Tag key={idx}>{tag}</Tag>
+            {validTags.length > 0 &&
+              validTags.map((tag: string, idx: number) => (
+                <Tag key={`${tag}-${idx}`}>{tag}</Tag>
               ))}
           </div>
         </div>

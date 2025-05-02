@@ -44,9 +44,31 @@ async function getPageProperties(
           break
         }
         case "multi_select": {
-          const selects = getTextContent(val)
-          if (selects[0]?.length) {
-            properties[schema[key].name] = selects.split(",")
+          try {
+            const selects = getTextContent(val)
+            console.log('Raw multi_select value:', val)
+            console.log('Processed selects:', selects)
+            
+            if (typeof selects === 'string' && selects.trim().length > 0) {
+              properties[schema[key].name] = selects
+                .split(",")
+                .map(tag => tag.trim())
+                .filter(tag => tag.length > 0)
+            }
+            else if (Array.isArray(selects) && selects.length > 0) {
+              properties[schema[key].name] = selects
+                .map(tag => tag.trim())
+                .filter(tag => tag.length > 0)
+            }
+            else {
+              properties[schema[key].name] = []
+            }
+
+            console.log('Final processed tags:', properties[schema[key].name])
+          } catch (error) {
+            console.error("Error processing multi_select:", error)
+            console.error("Value causing error:", val)
+            properties[schema[key].name] = []
           }
           break
         }

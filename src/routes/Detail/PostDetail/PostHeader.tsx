@@ -11,6 +11,9 @@ type Props = {
 }
 
 const PostHeader: React.FC<Props> = ({ data }) => {
+  // 태그가 실제로 존재하고 유효한 경우만 필터링
+  const validTags = data.tags?.filter(tag => tag && tag.trim().length > 0) || []
+
   return (
     <StyledWrapper>
       <h1 className="title">{data.title}</h1>
@@ -40,9 +43,9 @@ const PostHeader: React.FC<Props> = ({ data }) => {
             </div>
           </div>
           <div className="mid">
-            {data.tags && (
+            {validTags.length > 0 && (
               <div className="tags">
-                {data.tags.map((tag: string) => (
+                {validTags.map((tag: string) => (
                   <Tag key={tag}>{tag}</Tag>
                 ))}
               </div>
