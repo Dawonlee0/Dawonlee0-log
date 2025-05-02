@@ -14,6 +14,17 @@ const nextConfig = {
       'prod-files-secure.s3.us-west-2.amazonaws.com',
     ],
   },
+  experimental: {
+    workerThreads: true,
+    optimizeCss: true,
+    scrollRestoration: true,
+  },
+  onDemandEntries: {
+    // 서버 사이드 페이지 캐시 유지 시간
+    maxInactiveAge: 10 * 1000, // 10초
+    // 동시에 캐시할 수 있는 페이지 수
+    pagesBufferLength: 2,
+  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
