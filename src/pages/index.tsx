@@ -9,15 +9,27 @@ import { GetStaticProps } from "next"
 import { dehydrate } from "@tanstack/react-query"
 import { filterPosts } from "src/libs/utils/notion"
 
-export const getStaticProps: GetStaticProps = async () => {
-  const posts = filterPosts(await getPosts())
-  await queryClient.prefetchQuery(queryKey.posts(), () => posts)
+export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
+  try {
+    const posts = filterPosts(await getPosts())
+    await queryClient.prefetchQuery(queryKey.posts(), () => posts)
 
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-    revalidate: 1,  // 1초마다 재검증하도록 수정
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+        preview
+      },
+      revalidate: 1, // 1초마다 재검증
+    }
+  } catch (error) {
+    console.error('Error in getStaticProps:', error)
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+        preview
+      },
+      revalidate: 1
+    }
   }
 }
 
