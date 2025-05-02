@@ -16,7 +16,6 @@ const nextConfig = {
   },
   experimental: {
     workerThreads: true,
-    optimizeCss: true,
     scrollRestoration: true,
   },
   onDemandEntries: {
