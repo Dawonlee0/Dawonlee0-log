@@ -27,6 +27,8 @@ class MyDocument extends Document {
               />
             </>
           )}
+          {/* google adsense account */}
+          <meta name="google-adsense-account" content="ca-pub-9258969479286938" />
           {/* naver search advisor */}
           {CONFIG.naverSearchAdvisor.enable === true && (
             <>
